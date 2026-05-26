@@ -27,7 +27,7 @@ export default function Navbar() {
         <Link to="/" style={{ display: 'flex', alignItems: 'center', gap: 12, textDecoration: 'none' }}>
           <img
             src={logoImg}
-            alt="Joi"
+            alt="Charles"
             style={{
               height: scrolled? 38 : 46,
               width: 'auto',
@@ -37,7 +37,7 @@ export default function Navbar() {
             }}
           />
           <div>
-            <div style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: scrolled? 22 : 26, fontWeight: 300, letterSpacing: '0.18em', background: 'linear-gradient(135deg, #c9973a, #f5e0a8)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>Joi</div>
+            <div style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: scrolled? 22 : 26, fontWeight: 300, letterSpacing: '0.18em', background: 'linear-gradient(135deg, #c9973a, #f5e0a8)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>Charles</div>
             <div style={{ fontSize: 8, letterSpacing: '0.35em', color: 'rgba(201,151,58,0.7)', textTransform: 'uppercase' }}>Luxury Beauty</div>
           </div>
         </Link>
