@@ -589,15 +589,17 @@ export default function Landing() {
   useEffect(() => { injectStyles() }, [])
 
   useEffect(() => {
-    const apiUrl = 'http://172.17.88.199:5000/api/products'  /* thing thing bugged me for tow hours, i forgot to change it to my local ip address smh */
-    
+    const apiUrl = 'http://172.17.88.199:5000/api/products'
     fetch(apiUrl)
       .then((res) => {
         if (!res.ok) throw new Error(`API error: ${res.status}`)
         return res.json()
       })
-      .then((data) => {
-        setProducts(Array.isArray(data) ? data : [])
+      .then((json) => {
+        // New API wraps in { success, data: [...], meta }; old API returned a plain array
+        const list = Array.isArray(json) ? json : (Array.isArray(json.data) ? json.data : [])
+        // Only show active products on the storefront
+        setProducts(list.filter(p => p.active !== false))
         setLoading(false)
       })
       .catch((err) => {
