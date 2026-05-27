@@ -589,7 +589,7 @@ export default function Landing() {
   useEffect(() => { injectStyles() }, [])
 
   useEffect(() => {
-    const apiUrl = 'http://172.17.88.199:5000/api/products'
+    const apiUrl = 'https://humble-giggle-7gwrrwr6wv6fpg7p-5000.app.github.dev/api/products'
     fetch(apiUrl)
       .then((res) => {
         if (!res.ok) throw new Error(`API error: ${res.status}`)
