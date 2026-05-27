@@ -589,7 +589,7 @@ export default function Landing() {
   useEffect(() => { injectStyles() }, [])
 
   useEffect(() => {
-    const apiUrl = 'https://humble-giggle-7gwrrwr6wv6fpg7p-5000.app.github.dev/api/products'
+    const apiUrl = 'https://joy-beauty-shop-dashboard.onrender.com/api/products'
     fetch(apiUrl)
       .then((res) => {
         if (!res.ok) throw new Error(`API error: ${res.status}`)
