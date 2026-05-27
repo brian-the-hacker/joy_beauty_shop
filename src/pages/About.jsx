@@ -67,9 +67,9 @@ function FloatingOrbs() {
 
 /* ── Data ── */
 const milestones = [
-  { year: '2014', title: 'Founded', desc: 'Born in a Parisian atelier, Charles Beauty was created to bring true luxury to modern women.' },
+  { year: '2014', title: 'Founded', desc: 'Born in a Parisian atelier, Joi Beauty was created to bring true luxury to modern women.' },
   { year: '2017', title: 'First Award', desc: 'Velvet Noir Serum wins the Cosmopolitan Beauty Award for Best Luxury Serum.' },
-  { year: '2020', title: 'Global Expansion', desc: 'Charles Beauty launches in 40+ countries, reaching women across 5 continents.' },
+  { year: '2020', title: 'Global Expansion', desc: 'Joi Beauty launches in 40+ countries, reaching women across 5 continents.' },
   { year: '2023', title: 'Clean Certified', desc: 'Achieved full clean beauty certification — 100% cruelty-free and sustainably sourced.' },
   { year: '2026', title: 'The Future', desc: 'Introducing AI-powered skin ritual consultations and next-gen formulas.' },
 ]
@@ -88,7 +88,7 @@ const values = [
 ]
 
 const team = [
-  { name: 'Isabelle Laurent',  role: 'Founder & Creative Director',   img: 'https://images.pexels.com/photos/3992656/pexels-photo-3992656.jpeg?auto=compress&cs=tinysrgb&w=400', bio: 'Trained in Paris and Tokyo, Isabelle built Charles Beauty on the belief that luxury should feel personal.' },
+  { name: 'Isabelle Laurent',  role: 'Founder & Creative Director',   img: 'https://images.pexels.com/photos/3992656/pexels-photo-3992656.jpeg?auto=compress&cs=tinysrgb&w=400', bio: 'Trained in Paris and Tokyo, Isabelle built Joi Beauty on the belief that luxury should feel personal.' },
   { name: 'Dr. Amara Osei',    role: 'Chief Formulation Scientist',    img: 'https://images.pexels.com/photos/5490276/pexels-photo-5490276.jpeg?auto=compress&cs=tinysrgb&w=400', bio: 'With a PhD in biocosmetics, Amara bridges cutting-edge science with botanical wisdom.' },
   { name: 'Sofia Reyes',       role: 'Head of Brand & Experience',     img: 'https://images.pexels.com/photos/4046316/pexels-photo-4046316.jpeg?auto=compress&cs=tinysrgb&w=400', bio: 'Sofia shapes every touchpoint — from unboxing to skin ritual — into a sensory story.' },
 ]
@@ -168,7 +168,7 @@ export default function About() {
           <h1 style={{ fontSize: 'clamp(2.8rem, 9vw, 6.5rem)', fontWeight: 300, fontFamily: "'Cormorant Garamond', serif", lineHeight: 1.05, marginBottom: 20, opacity: 0, animation: 'fadeUp 1s ease .5s forwards' }}>
             <span style={{ display: 'block', color: '#fff' }}>The House of</span>
             <span style={{ display: 'block', background: 'linear-gradient(135deg,#FFD700 0%,#FFEC99 50%,#FFD700 100%)', backgroundSize: '200% auto', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', animation: 'shimmer 4s linear infinite 1.5s' }}>
-              Charles Beauty
+              Joi Beauty
             </span>
           </h1>
           <p style={{ color: 'rgba(255,255,255,.55)', fontSize: 'clamp(.85rem,2vw,1rem)', fontStyle: 'italic', letterSpacing: '.06em', maxWidth: 500, margin: '0 auto 2.8rem', opacity: 0, animation: 'fadeUp 1s ease .7s forwards' }}>
@@ -196,7 +196,7 @@ export default function About() {
         <div style={{ display: 'flex', whiteSpace: 'nowrap', animation: 'marquee 30s linear infinite' }}>
           {Array(10).fill(0).map((_, i) => (
             <span key={i} style={{ fontSize: 9, letterSpacing: '.28em', textTransform: 'uppercase', color: '#1B3A6B', fontWeight: 600, paddingRight: 40 }}>
-              Charles Beauty Shop &nbsp;&middot;&nbsp; 12 Global Awards &nbsp;&middot;&nbsp; 850K+ Customers &nbsp;&middot;&nbsp; Cruelty-Free &nbsp;&middot;&nbsp;
+              Joi Beauty Shop &nbsp;&middot;&nbsp; 12 Global Awards &nbsp;&middot;&nbsp; 850K+ Customers &nbsp;&middot;&nbsp; Cruelty-Free &nbsp;&middot;&nbsp;
             </span>
           ))}
         </div>
@@ -248,7 +248,7 @@ export default function About() {
             </h2>
             <div style={{ width: 0, height: 1, background: '#FFD700', marginBottom: 24, animation: missionVis ? 'lineGrow .8s ease .4s forwards' : 'none' }} />
             <p style={{ color: 'rgba(255,255,255,.55)', fontSize: 14, lineHeight: 1.9, marginBottom: 16 }}>
-              Charles Beauty was born from a simple conviction: that luxury skincare should not be a privilege, but a right. We set out to create formulas so potent, so refined, that every woman who touches them feels the difference immediately.
+              Joi Beauty was born from a simple conviction: that luxury skincare should not be a privilege, but a right. We set out to create formulas so potent, so refined, that every woman who touches them feels the difference immediately.
             </p>
             <p style={{ color: 'rgba(255,255,255,.4)', fontSize: 13, lineHeight: 1.9, marginBottom: 40 }}>
               From our Parisian atelier, we blend time-honored botanical rituals with modern biotechnology — because your skin deserves nothing less than perfection.
@@ -329,7 +329,7 @@ export default function About() {
         <FloatingOrbs />
         <div style={{ maxWidth: 1280, margin: '0 auto', position: 'relative', zIndex: 1 }}>
           <div style={{ textAlign: 'center', marginBottom: 60 }}>
-            <div style={{ fontSize: 9, letterSpacing: '.45em', textTransform: 'uppercase', color: '#FFD700', marginBottom: 14 }}>Behind Charles Beauty</div>
+            <div style={{ fontSize: 9, letterSpacing: '.45em', textTransform: 'uppercase', color: '#FFD700', marginBottom: 14 }}>Behind Joi Beauty</div>
             <h2 style={{ fontSize: 'clamp(2rem,4vw,3.5rem)', fontWeight: 300, fontFamily: "'Cormorant Garamond',serif", color: '#fff' }}>The Visionaries</h2>
           </div>
 

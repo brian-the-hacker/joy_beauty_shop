@@ -10,8 +10,8 @@ const features = [
 
 const reviews = [
   { name: 'Amara J.', role: 'Beauty Editor', text: '"Velvet Noir Serum changed my skin in 14 days. I get stopped on the street now."', stars: 5 },
-  { name: 'Sofia R.', role: 'Model & Influencer', text: '"Charles Beauty Shop is the only brand I trust before a shoot. The Gold Radiance Cream is everything."', stars: 5 },
-  { name: 'Kezia M.', role: 'Dermatologist', text: '"I recommend Charles Beauty Shop to my clients daily. Clinically clean, genuinely effective."', stars: 5 },
+  { name: 'Sofia R.', role: 'Model & Influencer', text: '"Joi Beauty Shop is the only brand I trust before a shoot. The Gold Radiance Cream is everything."', stars: 5 },
+  { name: 'Kezia M.', role: 'Dermatologist', text: '"I recommend Joi Beauty Shop to my clients daily. Clinically clean, genuinely effective."', stars: 5 },
 ]
 
 /* ─── Price formatting helper ─────────────────────────────────── */
@@ -563,10 +563,10 @@ function CtaBanner() {
           Discover Your Glow.{' '}
           <span style={{ background: 'linear-gradient(135deg,#FFD700,#FFEC99)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>15% Off Your First Order.</span>
         </h2>
-        <p style={{ color: 'rgba(255,255,255,.5)', fontSize: 13, lineHeight: 1.9, marginBottom: 32 }}>Join the Charles Beauty inner circle. Early access to new collections, exclusive drops, and curated beauty secrets.</p>
+        <p style={{ color: 'rgba(255,255,255,.5)', fontSize: 13, lineHeight: 1.9, marginBottom: 32 }}>Join the Joi Beauty inner circle. Early access to new collections, exclusive drops, and curated beauty secrets.</p>
         {joined ? (
           <div style={{ padding: '18px 28px', border: '1px solid rgba(255,215,0,.45)', color: '#FFD700', fontSize: 12, letterSpacing: '.1em', animation: 'landingScaleIn .4s ease' }}>
-            Welcome to Charles Beauty — your code is on its way.
+            Welcome to Joi Beauty — your code is on its way.
           </div>
         ) : (
           <div style={{ display: 'flex', maxWidth: 420, margin: '0 auto', flexWrap: 'wrap' }}>
@@ -644,7 +644,7 @@ export default function Landing() {
         <div style={{ position: 'relative', zIndex: 2, textAlign: 'center', padding: '9rem 1.2rem 3rem', maxWidth: 820 }}>
           <div style={{ fontSize: 9, letterSpacing: '.5em', textTransform: 'uppercase', color: '#FFD700', marginBottom: 20, opacity: 0, animation: 'landingFadeIn 1s ease .3s forwards' }}>Luxury Beauty Collection 2026</div>
           <h1 style={{ fontSize: 'clamp(2.4rem,10vw,6.5rem)', fontWeight: 300, fontFamily: "'Cormorant Garamond',serif", lineHeight: 1.05, marginBottom: 20, opacity: 0, animation: 'landingFadeUp 1s ease .5s forwards' }}>
-            <span style={{ display: 'block', color: '#fff' }}>Charles</span>
+            <span style={{ display: 'block', color: '#fff' }}>Joi</span>
             <span style={{ display: 'block', background: 'linear-gradient(135deg,#FFD700 0%,#FFEC99 50%,#FFD700 100%)', backgroundSize: '200% auto', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', animation: 'landingShimmer 4s linear infinite 1.5s' }}>Beauty Shop</span>
           </h1>
           <p style={{ color: 'rgba(255,255,255,.58)', fontSize: 'clamp(.8rem,2vw,.95rem)', lineHeight: 1.95, maxWidth: 500, margin: '0 auto 2.4rem', fontWeight: 300, opacity: 0, animation: 'landingFadeUp 1s ease .7s forwards' }}>
@@ -671,7 +671,7 @@ export default function Landing() {
         <div style={{ display: 'flex', whiteSpace: 'nowrap', animation: 'landingMarquee 28s linear infinite' }}>
           {Array(10).fill(0).map((_, i) => (
             <span key={i} style={{ fontSize: 9, letterSpacing: '.28em', textTransform: 'uppercase', color: '#1B3A6B', fontWeight: 600, paddingRight: 40 }}>
-              Charles Beauty Shop &nbsp;&middot;&nbsp; Free Shipping Over $150 &nbsp;&middot;&nbsp; Cruelty-Free &nbsp;&middot;&nbsp; Clean Beauty &nbsp;&middot;&nbsp;
+              Joi Beauty Shop &nbsp;&middot;&nbsp; Free Shipping Over $150 &nbsp;&middot;&nbsp; Cruelty-Free &nbsp;&middot;&nbsp; Clean Beauty &nbsp;&middot;&nbsp;
             </span>
           ))}
         </div>
