@@ -30,7 +30,7 @@ export default function Footer() {
 
         <div>
           <h4 style={{ fontSize: 10, letterSpacing: '0.3em', textTransform: 'uppercase', color: '#c9973a', marginBottom: 16 }}>Contact</h4>
-          {[{ I: Mail, t: 'hello@lumiere.beauty' }, { I: Phone, t: '+1 (800) 586-4437' }, { I: MapPin, t: '5th Ave, New York' }].map(({ I, t }) => (
+          {[{ I: Mail, t: 'hello@joi.beauty' }, { I: Phone, t: '+254 123 456  7890' }, { I: MapPin, t: '5th Ave, machakos' }].map(({ I, t }) => (
             <div key={t} style={{ display: 'flex', gap: 8, alignItems: 'center', marginBottom: 12 }}>
               <I size={14} color="rgba(201,151,58,0.7)" />
               <span style={{ color: 'rgba(255,255,255,0.5)', fontSize: 12 }}>{t}</span>

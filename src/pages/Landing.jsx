@@ -16,8 +16,8 @@ const reviews = [
 
 /* ─── Price formatting helper ─────────────────────────────────── */
 function formatPrice(price) {
-  if (typeof price === 'number') return `$${price.toFixed(0)}`
-  return String(price).startsWith('$') ? price : `$${price}`
+  if (typeof price === 'number') return `ksh ${price.toFixed(0)}`
+  return String(price).startsWith('ksh') ? price : `ksh ${price}`
 }
 
 /* ─── Keyframes ─────────────────────────────────────────────── */
