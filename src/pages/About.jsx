@@ -163,7 +163,7 @@ export default function About() {
             <Logo size={64} />
           </div>
           <div style={{ fontSize: 9, letterSpacing: '.5em', textTransform: 'uppercase', color: '#FFD700', marginBottom: 20, opacity: 0, animation: 'fadeIn 1s ease .4s forwards' }}>
-            Est. 2014 · Paris
+            Machakos
           </div>
           <h1 style={{ fontSize: 'clamp(2.8rem, 9vw, 6.5rem)', fontWeight: 300, fontFamily: "'Cormorant Garamond', serif", lineHeight: 1.05, marginBottom: 20, opacity: 0, animation: 'fadeUp 1s ease .5s forwards' }}>
             <span style={{ display: 'block', color: '#fff' }}>The House of</span>
