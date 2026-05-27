@@ -17,9 +17,9 @@ function useVisible(threshold = 0.12) {
 }
 
 const milestones = [
-  { year: '2014', title: 'Founded', desc: 'Born in a Parisian atelier, Charles was created to bring true luxury to modern women.' },
+  { year: '2014', title: 'Founded', desc: 'Born in a Parisian atelier, Joi was created to bring true luxury to modern women.' },
   { year: '2017', title: 'First Award', desc: 'Velvet Noir Serum wins the Cosmopolitan Beauty Award for Best Luxury Serum.' },
-  { year: '2020', title: 'Global Expansion', desc: 'Charles launches in 40+ countries, reaching women across 5 continents.' },
+  { year: '2020', title: 'Global Expansion', desc: 'Joi launches in 40+ countries, reaching women across 5 continents.' },
   { year: '2023', title: 'Clean Certified', desc: 'Achieved full clean beauty certification — 100% cruelty-free and sustainably sourced.' },
   { year: '2026', title: 'The Future', desc: 'Introducing AI-powered skin ritual consultations and next-gen formulas.' },
 ]
@@ -32,7 +32,7 @@ const stats = [
 ]
 
 const team = [
-  { name: 'Isabelle Laurent', role: 'Founder & Creative Director', img: 'https://images.pexels.com/photos/3992656/pexels-photo-3992656.jpeg?auto=compress&cs=tinysrgb&w=400', bio: 'Trained in Paris and Tokyo, Isabelle built Charles on the belief that luxury should feel personal.' },
+  { name: 'Isabelle Laurent', role: 'Founder & Creative Director', img: 'https://images.pexels.com/photos/3992656/pexels-photo-3992656.jpeg?auto=compress&cs=tinysrgb&w=400', bio: 'Trained in Paris and Tokyo, Isabelle built Joi on the belief that luxury should feel personal.' },
   { name: 'Dr. Amara Osei', role: 'Chief Formulation Scientist', img: 'https://images.pexels.com/photos/5490276/pexels-photo-5490276.jpeg?auto=compress&cs=tinysrgb&w=400', bio: 'With a PhD in biocosmetics, Amara bridges cutting-edge science with botanical wisdom.' },
   { name: 'Sofia Reyes', role: 'Head of Brand & Experience', img: 'https://images.pexels.com/photos/4046316/pexels-photo-4046316.jpeg?auto=compress&cs=tinysrgb&w=400', bio: 'Sofia shapes every touchpoint — from unboxing to skin ritual — into a sensory story.' },
 ]
@@ -59,7 +59,7 @@ export default function About() {
           <div style={{ fontSize: 10, letterSpacing: '0.45em', textTransform: 'uppercase', color: '#c9973a', marginBottom: 20, opacity: 0, animation: 'fadeIn 1s ease 0.4s forwards' }}>Est. 2014 · Paris</div>
           <h1 style={{ fontSize: 'clamp(2.5rem, 7vw, 6rem)', fontWeight: 300, color: '#fff', lineHeight: 1.1, marginBottom: 24, opacity: 0, animation: 'fadeUp 1s ease 0.5s forwards' }}>
             The House of{' '}
-            <span style={{ background: 'linear-gradient(135deg, #c9973a, #f5e0a8)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>Charles</span>
+            <span style={{ background: 'linear-gradient(135deg, #c9973a, #f5e0a8)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>Joi</span>
           </h1>
           <p style={{ color: 'rgba(255,255,255,0.55)', fontSize: '1rem', fontStyle: 'italic', letterSpacing: '0.06em', opacity: 0, animation: 'fadeUp 1s ease 0.7s forwards' }}>
             "Where science meets luxury, beauty becomes power."
@@ -85,7 +85,7 @@ export default function About() {
               <span style={{ background: 'linear-gradient(135deg, #c9973a, #f5e0a8)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>Every Woman</span>
             </h2>
             <div style={{ width: 40, height: 1, background: '#c9973a', marginBottom: 24 }} />
-            <p style={{ color: 'rgba(255,255,255,0.55)', fontSize: 14, lineHeight: 1.9, marginBottom: 16 }}>Charles was born from a simple conviction: that luxury skincare should not be a privilege, but a right. We set out to create formulas so potent, so refined, that every woman who touches them feels the difference immediately.</p>
+            <p style={{ color: 'rgba(255,255,255,0.55)', fontSize: 14, lineHeight: 1.9, marginBottom: 16 }}>Joi was born from a simple conviction: that luxury skincare should not be a privilege, but a right. We set out to create formulas so potent, so refined, that every woman who touches them feels the difference immediately.</p>
             <p style={{ color: 'rgba(255,255,255,0.45)', fontSize: 13, lineHeight: 1.9, marginBottom: 40 }}>From our Parisian atelier, we blend time-honored botanical rituals with modern biotechnology — because your skin deserves nothing less than perfection.</p>
             <Link to="/" style={{ padding: '14px 32px', border: '1px solid rgba(201,151,58,0.4)', color: '#c9973a', fontSize: 11, letterSpacing: '0.2em', textTransform: 'uppercase', textDecoration: 'none', display: 'inline-flex', alignItems: 'center', gap: 10 }}>
               Explore Collection <ArrowRight size={12} />
@@ -149,7 +149,7 @@ export default function About() {
       <section ref={teamRef} style={{ padding: '6rem 2rem 8rem', background: 'rgba(6,14,26,0.6)', borderTop: '1px solid rgba(201,151,58,0.08)' }}>
         <div style={{ maxWidth: 1280, margin: '0 auto' }}>
           <div style={{ textAlign: 'center', marginBottom: 64 }}>
-            <div style={{ fontSize: 10, letterSpacing: '0.4em', textTransform: 'uppercase', color: '#c9973a', marginBottom: 16 }}>Behind Charles</div>
+            <div style={{ fontSize: 10, letterSpacing: '0.4em', textTransform: 'uppercase', color: '#c9973a', marginBottom: 16 }}>Behind Joi</div>
             <h2 style={{ fontSize: 'clamp(2rem, 4vw, 3.5rem)', fontWeight: 300, color: '#fff' }}>The Visionaries</h2>
           </div>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: 32 }}>
