@@ -8,10 +8,12 @@ export default function App() {
   return (
     <>
       <Navbar />
+
       <Routes>
         <Route path="/" element={<Landing />} />
         <Route path="/about" element={<About />} />
       </Routes>
+
       <Footer />
     </>
   )
