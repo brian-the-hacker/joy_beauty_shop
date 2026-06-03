@@ -29,17 +29,17 @@ export default function Navbar() {
         display: 'flex', alignItems: 'center', justifyContent: 'space-between',
         height: scrolled ? 70 : 88, transition: 'height 0.3s'
       }}>
-        <Link to="/" style={{ display: 'flex', alignItems: 'center', gap: 12, textDecoration: 'none' }}>
-          <img src={logoImg} alt="Joi" style={{ height: scrolled ? 38 : 46, width: 'auto', objectFit: 'contain', transition: 'height 0.3s' }} />
-          <div>
-            <div style={{
-              fontFamily: "'Cormorant Garamond', serif",
-              fontSize: scrolled ? 22 : 26, fontWeight: 300, letterSpacing: '0.18em',
-              background: 'linear-gradient(135deg, #a06800, #c28a00)',
-              WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent'
-            }}>Joi</div>
-            <div style={{ fontSize: 8, letterSpacing: '0.35em', color: 'rgba(160,104,0,0.7)', textTransform: 'uppercase' }}>Luxury Beauty</div>
-          </div>
+        <Link to="/" style={{ display: 'flex', alignItems: 'center', textDecoration: 'none' }}>
+          <img
+            src={logoImg}
+            alt="Joi"
+            style={{
+              height: scrolled ? 42 : 52,
+              width: 'auto',
+              objectFit: 'contain',
+              transition: 'height 0.3s',
+            }}
+          />
         </Link>
 
         <div className="desktop-nav" style={{ display: 'flex', gap: 32, alignItems: 'center' }}>
@@ -54,13 +54,7 @@ export default function Navbar() {
               transition: 'color 0.3s',
             }}>{l.label}</Link>
           ))}
-          <Link to="/#collections" style={{
-            padding: '10px 24px',
-            border: `1px solid ${scrolled ? '#a06800' : 'rgba(255,215,0,0.7)'}`,
-            color: scrolled ? '#a06800' : '#FFD700',
-            fontSize: 11, letterSpacing: '0.2em', textTransform: 'uppercase',
-            textDecoration: 'none', transition: 'all 0.3s',
-          }}>Shop</Link>
+          
         </div>
 
         <button onClick={() => setOpen(!open)} style={{
