@@ -71,11 +71,11 @@ const stats = [
 ]
 
 const values = [
-  { icon: Shield,   title: 'Quality',       desc: 'We are committed to producing products that consistently meet high standards and customer expectations — in every batch, without compromise.' },
-  { icon: Users,    title: 'Accountability', desc: 'We believe in ownership, responsibility, and delivering on our commitments to customers, partners, and staff at every level.' },
-  { icon: Sparkles, title: 'Innovation',     desc: 'We continuously improve our products, processes, and customer experience to remain relevant and competitive in African hair care.' },
-  { icon: Heart,    title: 'Joy & Care',     desc: 'We create a joyful, positive experience for both customers and employees by fostering a people-centered and respectful culture.' },
-  { icon: Leaf,     title: 'Integrity',      desc: 'We value honesty, transparency, and ethical business practices in everything we do — with customers, partners, and communities.' },
+  { icon: Shield,   title: 'Quality',       desc: 'We are committed to producing products that consistently meet high standards and customer expectations.' },
+  { icon: Users,    title: 'Accountability', desc: 'We believe in ownership, responsibility, and delivering on our commitments to customers, partners, and staff.' },
+  { icon: Sparkles, title: 'Innovation',     desc: 'We continuously improve our products, processes, and customer experience to remain relevant and competitive.' },
+  { icon: Heart,    title: 'Joy & Care',     desc: 'We aim to create a joyful experience for both customers and employees by fostering a positive, respectful, and people-centered culture.' },
+  { icon: Leaf,     title: 'Integrity',      desc: 'We value honesty, transparency, and ethical business practices in everything we do.' },
 ]
 
 const processSteps = [
@@ -133,7 +133,6 @@ export default function About() {
         <div style={{ position:'absolute', inset:0, background:'linear-gradient(to bottom,transparent 50%,#fff 100%)' }} />
         <DarkOrbs />
         <div style={{ position:'relative', zIndex:2, textAlign:'center', padding:'9rem 1.2rem 3rem', maxWidth:820 }}>
-          {/* Logo — top center, white surface */}
           {/* Hero centre logo */}
           <div style={{ display:'flex', justifyContent:'center', marginBottom:20, marginTop:'-15rem', opacity:0, animation:'fadeIn 1s ease .1s forwards' }}>
             <div style={{
@@ -257,13 +256,25 @@ export default function About() {
               Today, Joi manufactures a growing range of hair food, styling, and scalp care products — each held to consistent quality standards across every batch. We believe quality should be repeatable, not occasional. That's why our manufacturing process is built around systems, not shortcuts. We're building something bigger than a product line — we're building the kind of brand that sits on the shelf in every home across Africa, trusted, familiar, and loved.
             </p>
             <div style={{ display:'grid', gap:16 }}>
+              {/* Mission */}
               <div style={{ padding:'1.4rem 1.6rem', border:`1px solid rgba(201,151,58,.3)`, background:'rgba(201,151,58,.04)', borderRadius:4 }}>
                 <div style={{ fontSize:8, letterSpacing:'.3em', textTransform:'uppercase', color:GOLD_D, marginBottom:8 }}>Our Mission</div>
-                <p style={{ color:'rgba(27,58,107,.7)', fontSize:12.5, lineHeight:1.8, fontStyle:'italic' }}>"To manufacture high-quality and affordable beauty and personal care products that bring joy, confidence, and satisfaction to everyday consumers."</p>
+                <p style={{ color:'rgba(27,58,107,.7)', fontSize:12.5, lineHeight:1.8, fontStyle:'italic', marginBottom:8 }}>
+                  "To manufacture high-quality and affordable beauty and personal care products that bring joy, confidence, and satisfaction to everyday consumers."
+                </p>
+                <p style={{ color:'rgba(27,58,107,.55)', fontSize:12, lineHeight:1.8, margin:0 }}>
+                  We are committed to creating products that combine quality, consistency, accessibility, and a positive customer experience.
+                </p>
               </div>
+              {/* Vision */}
               <div style={{ padding:'1.4rem 1.6rem', border:`1px solid rgba(201,151,58,.3)`, background:'rgba(201,151,58,.04)', borderRadius:4 }}>
                 <div style={{ fontSize:8, letterSpacing:'.3em', textTransform:'uppercase', color:GOLD_D, marginBottom:8 }}>Our Vision</div>
-                <p style={{ color:'rgba(27,58,107,.7)', fontSize:12.5, lineHeight:1.8, fontStyle:'italic' }}>"To enrich everyday life through exceptional beauty products, inspiring workplaces, and joyful customer experiences — becoming a leading African household beauty brand known for quality, innovation, trust, and positive impact on customers, employees, and communities."</p>
+                <p style={{ color:'rgba(27,58,107,.7)', fontSize:12.5, lineHeight:1.8, fontStyle:'italic', marginBottom:8 }}>
+                  "To enrich everyday life through exceptional beauty products, inspiring workplaces, and joyful customer experiences."
+                </p>
+                <p style={{ color:'rgba(27,58,107,.55)', fontSize:12, lineHeight:1.8, margin:0 }}>
+                  We envision Joi becoming a leading African household beauty brand known for quality, innovation, trust, and positive impact on customers, employees, and communities.
+                </p>
               </div>
             </div>
           </div>
