@@ -232,7 +232,7 @@ function OurStory() {
         {/* Image side */}
         <div style={{ position:'relative', opacity:vis?1:0, transform:vis?'translateX(0)':'translateX(-32px)', transition:'all .9s ease' }}>
           <div style={{ position:'absolute', top:-16, left:-16, right:16, bottom:16, border:'1px solid rgba(140,90,0,.18)', zIndex:0, pointerEvents:'none' }} />
-          <img src="src/assets/DSC_1073.webp" alt="Joi Story" style={{ width:'100%', height:440, objectFit:'cover', position:'relative', zIndex:1, filter:'brightness(.92) saturate(1.05)' }} />
+          <img src="https://res.cloudinary.com/dpyjgcgoa/image/upload/v1780571134/joi-products/ikpbosvym2qt3n4c7tys.jpg" alt="Joi Story" style={{ width:'100%', height:440, objectFit:'cover', position:'relative', zIndex:1, filter:'brightness(.92) saturate(1.05)' }} />
           <div style={{ position:'absolute', bottom:-20, right:-20, background:'linear-gradient(135deg,#FFD700,#FFE34D)', padding:'1rem 1.4rem', zIndex:2, boxShadow:'0 12px 40px rgba(0,0,0,.12)' }}>
             <div style={{ fontSize:8, letterSpacing:'.2em', textTransform:'uppercase', color:'#1a1a1a', fontWeight:600 }}>Proudly</div>
             <div style={{ fontSize:'1.4rem', fontWeight:300, fontFamily:"'Cormorant Garamond',serif", color:'#1a1a1a', lineHeight:1.1 }}>Made in Kenya</div>
