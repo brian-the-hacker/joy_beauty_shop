@@ -221,7 +221,7 @@ function ProductShowcase({ products }) {
   )
 }
 
-/* ─── Our Story section ─────────────────────────────────────── */
+/* ─── Our Story section ───────────────────────────────────────  */
 function OurStory() {
   const { ref, vis } = useVisible(0.08)
   return (
