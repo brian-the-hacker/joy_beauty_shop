@@ -388,17 +388,47 @@ export default function Landing() {
         <div style={{ position:'relative', zIndex:2, textAlign:'center', padding:'9rem 1.2rem 3rem', maxWidth:820 }}>
           {/* Logo — top center, white surface */}
           {/* Hero centre logo */}
-          <div style={{ display:'flex', justifyContent:'center', marginBottom:20, marginTop:'-15rem', opacity:0, animation:'landingFadeIn 1s ease .1s forwards' }}>
-            <img
-              src={logoImg}
-              alt="Joi"
-              style={{
-                height: 120,
-                width: 'auto',
-                objectFit: 'contain',
-                filter: 'drop-shadow(0 8px 32px rgba(0,0,0,.6)) brightness(1.05)',
-              }}
-            />
+         <div style={{ display:'flex', justifyContent:'center', marginBottom:20, marginTop:'-15rem', opacity:0, animation:'landingFadeIn 1s ease .1s forwards' }}>
+            <div style={{
+              position: 'relative',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              width: 160,
+              height: 160,
+            }}>
+              {/* Outer glow ring */}
+              <div style={{
+                position: 'absolute',
+                inset: -14,
+                borderRadius: '50%',
+                background: 'radial-gradient(circle, rgba(255,215,0,0.18) 0%, transparent 70%)',
+                pointerEvents: 'none',
+              }} />
+              {/* Circle backdrop */}
+              <div style={{
+                position: 'absolute',
+                inset: 0,
+                borderRadius: '50%',
+                background: 'rgba(255,255,255,0.12)',
+                border: '1px solid rgba(255,255,255,0.25)',
+                backdropFilter: 'blur(6px)',
+                boxShadow: '0 8px 40px rgba(255,215,0,0.15), inset 0 1px 0 rgba(255,255,255,0.2)',
+              }} />
+              {/* Logo */}
+              <img
+                src={logoImg}
+                alt="Joi"
+                style={{
+                  position: 'relative',
+                  zIndex: 1,
+                  height: 100,
+                  width: 'auto',
+                  objectFit: 'contain',
+                  filter: 'drop-shadow(0 8px 32px rgba(0,0,0,.5)) brightness(1.08)',
+                }}
+              />
+            </div>
           </div>
           <div style={{ fontSize:9, letterSpacing:'.5em', textTransform:'uppercase', color:'#e8c870', marginBottom:20, opacity:0, animation:'landingFadeIn 1s ease .4s forwards' }}>Premium Hair &amp; Beauty Manufacturing · Proudly Made in Kenya</div>
           <h1 style={{ fontSize:'clamp(2.4rem,10vw,6.5rem)', fontWeight:300, fontFamily:"'Cormorant Garamond',serif", lineHeight:1.05, marginBottom:20, opacity:0, animation:'landingFadeUp 1s ease .5s forwards' }}>

@@ -132,19 +132,51 @@ export default function About() {
         <div style={{ position:'absolute', inset:0, backgroundImage:'linear-gradient(rgba(255,215,0,.025) 1px,transparent 1px),linear-gradient(90deg,rgba(255,215,0,.025) 1px,transparent 1px)', backgroundSize:'64px 64px' }} />
         <div style={{ position:'absolute', inset:0, background:'linear-gradient(to bottom,transparent 50%,#fff 100%)' }} />
         <DarkOrbs />
-        <div style={{ position:'relative', zIndex:2, textAlign:'center', padding:'9rem 1.5rem 3rem', maxWidth:860 }}>
-          <div style={{ display:'flex', justifyContent:'center', marginBottom:20, marginTop:'-15rem', opacity:0, animation:'landingFadeIn 1s ease .1s forwards' }}>
-                      <img
-                        src={logoImg}
-                        alt="Joi"
-                        style={{
-                          height: 120,
-                          width: 'auto',
-                          objectFit: 'contain',
-                          filter: 'drop-shadow(0 8px 32px rgba(0,0,0,.6)) brightness(1.05)',
-                        }}
-                      />
-                    </div>
+        <div style={{ position:'relative', zIndex:2, textAlign:'center', padding:'9rem 1.2rem 3rem', maxWidth:820 }}>
+          {/* Logo — top center, white surface */}
+          {/* Hero centre logo */}
+          <div style={{ display:'flex', justifyContent:'center', marginBottom:20, marginTop:'-15rem', opacity:0, animation:'fadeIn 1s ease .1s forwards' }}>
+            <div style={{
+              position: 'relative',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              width: 160,
+              height: 160,
+            }}>
+              {/* Outer glow ring */}
+              <div style={{
+                position: 'absolute',
+                inset: -14,
+                borderRadius: '50%',
+                background: 'radial-gradient(circle, rgba(255,215,0,0.18) 0%, transparent 70%)',
+                pointerEvents: 'none',
+              }} />
+              {/* Circle backdrop */}
+              <div style={{
+                position: 'absolute',
+                inset: 0,
+                borderRadius: '50%',
+                background: 'rgba(255,255,255,0.12)',
+                border: '1px solid rgba(255,255,255,0.25)',
+                backdropFilter: 'blur(6px)',
+                boxShadow: '0 8px 40px rgba(255,215,0,0.15), inset 0 1px 0 rgba(255,255,255,0.2)',
+              }} />
+              {/* Logo */}
+              <img
+                src={logoImg}
+                alt="Joi"
+                style={{
+                  position: 'relative',
+                  zIndex: 1,
+                  height: 100,
+                  width: 'auto',
+                  objectFit: 'contain',
+                  filter: 'drop-shadow(0 8px 32px rgba(0,0,0,.5)) brightness(1.08)',
+                }}
+              />
+            </div>
+          </div>
           <div style={{ fontSize:9, letterSpacing:'.5em', textTransform:'uppercase', color:GOLD_L, marginBottom:20, opacity:0, animation:'fadeIn 1s ease .4s forwards' }}>Wellstrend Creations Ltd. · Made in Kenya</div>
           <h1 style={{ fontSize:'clamp(2.8rem,9vw,6.5rem)', fontWeight:300, fontFamily:"'Cormorant Garamond',serif", lineHeight:1.05, marginBottom:20, opacity:0, animation:'fadeUp 1s ease .5s forwards' }}>
             <span style={{ display:'block', color:'#fff' }}>The Story Behind</span>
@@ -231,7 +263,7 @@ export default function About() {
               </div>
               <div style={{ padding:'1.4rem 1.6rem', border:`1px solid rgba(201,151,58,.3)`, background:'rgba(201,151,58,.04)', borderRadius:4 }}>
                 <div style={{ fontSize:8, letterSpacing:'.3em', textTransform:'uppercase', color:GOLD_D, marginBottom:8 }}>Our Vision</div>
-                <p style={{ color:'rgba(27,58,107,.7)', fontSize:12.5, lineHeight:1.8, fontStyle:'italic' }}>"To enrich everyday life through exceptional beauty products and become a leading African household beauty brand known for quality, innovation, trust, and positive impact."</p>
+                <p style={{ color:'rgba(27,58,107,.7)', fontSize:12.5, lineHeight:1.8, fontStyle:'italic' }}>"To enrich everyday life through exceptional beauty products, inspiring workplaces, and joyful customer experiences — becoming a leading African household beauty brand known for quality, innovation, trust, and positive impact on customers, employees, and communities."</p>
               </div>
             </div>
           </div>
