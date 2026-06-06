@@ -58,7 +58,7 @@ export default function Footer() {
           {[
             { Icon:Phone,  href:'tel:+254748635395',                  text:'+254 748 635 395'            },
             { Icon:Mail,   href:'mailto:Wellssolutions2015@gmail.com', text:'Wellssolutions2015@gmail.com'},
-            { Icon:MapPin, href:null,                                  text:', Kenya'              },
+            { Icon:MapPin, href:null,                                  text:'Kenya'              },
           ].map(({ Icon, href, text }) => {
             const row = (
               <div style={{ display:'flex', alignItems:'flex-start', gap:9, marginBottom:12 }}>
