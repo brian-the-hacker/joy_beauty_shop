@@ -20,12 +20,12 @@ const reviews = [
 ]
 
 const HERO_BG   = 'https://images.pexels.com/photos/3065209/pexels-photo-3065209.jpeg?auto=compress&cs=tinysrgb&w=1600'
-const STORY_IMG = 'src/assets/DSC_1073.jpg'
+const STORY_IMG = 'https://res.cloudinary.com/dpyjgcgoa/image/upload/v1780744421/joi-products/sd0a1zitgxcyknsc15yn.jpg'
 const API_URL   = 'https://joy-beauty-shop-dashboard.onrender.com/api/products'
 
 /* ─── Cache helpers (stale-while-revalidate) ─────────────────── */
 const CACHE_KEY = 'joi_products_v2'
-const CACHE_TTL = 1000 * 60 * 30 // 30 minutes
+const CACHE_TTL = 1000 * 60 * 5  // ✅ FIX 1: 30 minutes → 5 minutes
 
 function readCache() {
   try {
@@ -1126,8 +1126,22 @@ export default function Landing() {
     let cancelled = false
 
     async function loadProducts() {
-      // ── Step 1: serve from cache immediately if available ──────
+      // ✅ FIX 3: Force-refresh escape hatch for development
+      if (window.location.search.includes('refresh')) {
+        localStorage.removeItem(CACHE_KEY)
+        // Optional: remove refresh param from URL without reload
+        if (window.history?.replaceState) {
+          const url = new URL(window.location.href)
+          url.searchParams.delete('refresh')
+          window.history.replaceState({}, '', url)
+        }
+      }
+
+      // ✅ FIX 2: Snapshot previous cache BEFORE any async operation
       const cache = readCache()
+      const previousData = cache?.data ?? null  // ← CRITICAL: snapshot here
+
+      // Step 1: serve cache immediately if available
       if (cache) {
         setProducts(cache.data)
         setLoading(false)
@@ -1135,9 +1149,9 @@ export default function Landing() {
         if (!cache.expired) return
       }
 
-      // ── Step 2: fetch from network (fresh load or revalidation) ─
+      // Step 2: fetch from network (fresh load or revalidation)
       try {
-        const res  = await fetch(API_URL)
+        const res = await fetch(API_URL)
         if (!res.ok) throw new Error('Network response not ok')
         const json = await res.json()
         const list = (Array.isArray(json) ? json : (Array.isArray(json.data) ? json.data : []))
@@ -1145,18 +1159,18 @@ export default function Landing() {
 
         if (cancelled) return
 
-        // Only update state + cache if data actually changed
-        const cached = readCache()
-        if (!cached || JSON.stringify(list) !== JSON.stringify(cached.data)) {
+        // ✅ FIX 2: Compare against PREVIOUS cache, not the one we just wrote
+        if (JSON.stringify(list) !== JSON.stringify(previousData)) {
           setProducts(list)
-          preloadImages(list, 4)   // preload first 4 images
+          preloadImages(list, 4)
           writeCache(list)
         }
 
         setLoading(false)
-      } catch {
+      } catch (err) {
         // Network failed — if we already have cached data, keep showing it
         if (!cancelled) setLoading(false)
+        console.error('Failed to fetch products:', err)
       }
     }
 
