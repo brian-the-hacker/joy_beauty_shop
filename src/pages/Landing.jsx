@@ -20,7 +20,7 @@ const reviews = [
 ]
 
 const HERO_BG   = 'https://images.pexels.com/photos/3065209/pexels-photo-3065209.jpeg?auto=compress&cs=tinysrgb&w=1600'
-const STORY_IMG = 'https://res.cloudinary.com/dpyjgcgoa/image/upload/v1780744421/joi-products/sd0a1zitgxcyknsc15yn.jpg'
+const STORY_IMG = '../assets/DSC_1073.jpg'
 const API_URL   = 'https://joy-beauty-shop-dashboard.onrender.com/api/products'
 
 /* ─── Cache helpers (stale-while-revalidate) ─────────────────── */
