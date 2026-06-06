@@ -215,7 +215,7 @@ export default function About() {
           {/* Image */}
           <div style={{ position:'relative' }}>
             <div style={{ position:'absolute', top:-18, left:-18, right:18, bottom:18, border:`1px solid rgba(201,151,58,.22)`, pointerEvents:'none', zIndex:0 }} />
-            <img src="https://images.pexels.com/photos/3785147/pexels-photo-3785147.jpeg?auto=compress&cs=tinysrgb&w=800" alt="Manufacturing" style={{ width:'100%', height:500, objectFit:'cover', display:'block', filter:'brightness(.88) saturate(1.08)', position:'relative', zIndex:1 }} />
+            <img src="https://res.cloudinary.com/dpyjgcgoa/image/upload/v1780742882/joi-products/cb29ehyubygaigsvckl2.jpg" alt="Manufacturing" style={{ width:'100%', height:500, objectFit:'cover', display:'block', filter:'brightness(.88) saturate(1.08)', position:'relative', zIndex:1 }} />
             <div style={{ position:'absolute', bottom:-22, right:-22, width:105, height:105, background:`linear-gradient(135deg,${GOLD_D},${GOLD_L})`, display:'flex', flexDirection:'column', alignItems:'center', justifyContent:'center', zIndex:2, boxShadow:'0 18px 50px rgba(0,0,0,.18)' }}>
               <span style={{ fontSize:'1.15rem', fontWeight:600, fontFamily:"'Cormorant Garamond',serif", color:NAVY, lineHeight:1 }}>Est.</span>
               <span style={{ fontSize:'1.4rem', fontWeight:300, fontFamily:"'Cormorant Garamond',serif", color:NAVY, lineHeight:1 }}>2015</span>
