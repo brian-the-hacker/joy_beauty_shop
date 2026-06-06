@@ -6,6 +6,7 @@ import {
   Search, X, ZoomIn, Building2
 } from 'lucide-react'
 import logoImg from '../assets/logo.png'
+import STORY_IMG from '../assets/DSC_1073.jpg';
 
 /* ─── Static data ────────────────────────────────────────────── */
 const features = [
@@ -20,7 +21,7 @@ const reviews = [
 ]
 
 const HERO_BG   = 'https://images.pexels.com/photos/3065209/pexels-photo-3065209.jpeg?auto=compress&cs=tinysrgb&w=1600'
-const STORY_IMG = '../assets/DSC_1073.jpg'
+
 const API_URL   = 'https://joy-beauty-shop-dashboard.onrender.com/api/products'
 
 /* ─── Cache helpers (stale-while-revalidate) ─────────────────── */
