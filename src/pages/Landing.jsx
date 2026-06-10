@@ -3,10 +3,11 @@ import { Link } from 'react-router-dom'
 import {
   ArrowRight, Star, Sparkles, Shield, Leaf,
   ChevronLeft, ChevronRight, Phone, Mail,
-  Search, X, ZoomIn, Building2
+  Search, X, ZoomIn, ChevronDown
 } from 'lucide-react'
 import logoImg from '../assets/logo.png'
 import STORY_IMG from '../assets/DSC_1073.jpg'
+import AFRICAN_BRAIDS_BG from '../assets/back.jpeg'
 
 /* ─── Static data ────────────────────────────────────────────── */
 const features = [
@@ -20,7 +21,30 @@ const reviews = [
   { name: 'Brian O.',  role: 'Distributor, Mombasa', text: '"Consistent quality and great packaging every time. Joi products practically sell themselves once customers try them."', stars: 5 },
 ]
 
-const HERO_BG = 'https://images.pexels.com/photos/3065209/pexels-photo-3065209.jpeg?auto=compress&cs=tinysrgb&w=1600'
+/* Punchy taglines mapped by product name keywords */
+const PUNCHLINES = {
+  'hair food':         'Nourish. Strengthen. Shine.',
+  'anti-dandruff':     'Healthy Scalp. Beautiful Hair.',
+  'leave-in':          'Hydrate. Refresh. Revive.',
+  'moulding gel':      'Style with Confidence.',
+  'curl activator':    'Define Every Curl Beautifully.',
+  'braiding gel':      'Perfect Braids That Last.',
+  'styling gel':       'Hold. Shine. Perform.',
+  'loc spray':         'Refresh. Strengthen. Maintain.',
+  'braid spray':       'Fresh Braids, Healthy Scalp.',
+}
+
+function getPunchline(name = '') {
+  const lower = name.toLowerCase()
+  for (const [key, line] of Object.entries(PUNCHLINES)) {
+    if (lower.includes(key)) return line
+  }
+  return null
+}
+
+/* African braids hero background */
+
+
 const API_URL = 'https://joy-beauty-shop-dashboard.onrender.com/api/products'
 
 /* ─── Cache helpers ──────────────────────────────────────────── */
@@ -35,7 +59,6 @@ function readCache() {
     return { data, expired: Date.now() - ts > CACHE_TTL }
   } catch { return null }
 }
-
 function writeCache(data) {
   try { localStorage.setItem(CACHE_KEY, JSON.stringify({ data, ts: Date.now() })) } catch {}
 }
@@ -43,7 +66,6 @@ function writeCache(data) {
 /* ─── Global styles ──────────────────────────────────────────── */
 const STYLES = `
   @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Montserrat:wght@400;500;600;700&display=swap');
-
   *, *::before, *::after { box-sizing: border-box; }
 
   @keyframes floatA      { 0%,100%{transform:translateY(0)}           50%{transform:translateY(-14px)} }
@@ -58,27 +80,17 @@ const STYLES = `
   @keyframes lineGrow    { from{width:0}                              to{width:52px} }
   @keyframes backdropIn  { from{opacity:0}                            to{opacity:1} }
   @keyframes modalIn     { from{opacity:0;transform:scale(.97) translateY(12px)} to{opacity:1;transform:scale(1) translateY(0)} }
+  @keyframes expandIn    { from{opacity:0;max-height:0} to{opacity:1;max-height:300px} }
 
-  /* ── Skeleton ── */
   .joi-skeleton {
     background: linear-gradient(90deg,#ede9e2 0%,#e4dfd5 50%,#ede9e2 100%);
     background-size: 300% 100%;
     animation: skeletonPulse 1.8s ease-in-out infinite;
   }
 
-  /* ── LQIP image ── */
   .joi-img-wrap { position:relative; overflow:hidden; width:100%; height:100%; }
-  .joi-img-lqip {
-    position:absolute; inset:0; width:100%; height:100%;
-    object-fit:cover; object-position:center top;
-    filter:blur(14px); transform:scale(1.1);
-    transition:opacity .5s ease;
-  }
-  .joi-img-main {
-    position:relative; width:100%; height:100%;
-    object-fit:cover; object-position:center top;
-    opacity:0; transition:opacity .6s ease; display:block;
-  }
+  .joi-img-lqip { position:absolute; inset:0; width:100%; height:100%; object-fit:cover; object-position:center top; filter:blur(14px); transform:scale(1.1); transition:opacity .5s ease; }
+  .joi-img-main { position:relative; width:100%; height:100%; object-fit:cover; object-position:center top; opacity:0; transition:opacity .6s ease; display:block; }
   .joi-img-main.loaded { opacity:1; }
   .joi-img-lqip.hidden { opacity:0; pointer-events:none; }
 
@@ -89,9 +101,7 @@ const STYLES = `
     border-radius:2px;
     overflow:hidden;
     cursor:pointer;
-    transition:transform .45s cubic-bezier(.25,.46,.45,.94),
-               box-shadow .45s cubic-bezier(.25,.46,.45,.94),
-               border-color .25s;
+    transition:transform .45s cubic-bezier(.25,.46,.45,.94), box-shadow .45s cubic-bezier(.25,.46,.45,.94), border-color .25s;
     display:flex;
     flex-direction:column;
     will-change:transform;
@@ -101,140 +111,55 @@ const STYLES = `
     box-shadow:0 28px 64px rgba(0,0,0,.13), 0 6px 18px rgba(0,0,0,.06);
     border-color:rgba(140,90,0,.45);
   }
-  .joi-desk-card-img {
-    position:relative;
-    height:340px;
-    overflow:hidden;
-    background:#f5f3ee;
-    flex-shrink:0;
-  }
-  .joi-desk-card-img > .joi-img-wrap img {
-    transition:transform .65s cubic-bezier(.25,.46,.45,.94);
-  }
-  .joi-desk-card:hover .joi-desk-card-img > .joi-img-wrap img {
-    transform:scale(1.07);
-  }
-  .joi-desk-card-body {
-    padding:1.4rem 1.5rem 1.7rem;
-    flex:1; display:flex; flex-direction:column;
-    border-top:1px solid #f0ece4;
-  }
-  .joi-desk-zoom-overlay {
-    position:absolute; inset:0;
-    display:flex; align-items:center; justify-content:center;
-    opacity:0; transition:opacity .28s;
-    pointer-events:none;
-    background:rgba(0,0,0,.06);
-  }
+  .joi-desk-card-img { position:relative; height:340px; overflow:hidden; background:#f5f3ee; flex-shrink:0; }
+  .joi-desk-card-img > .joi-img-wrap img { transition:transform .65s cubic-bezier(.25,.46,.45,.94); }
+  .joi-desk-card:hover .joi-desk-card-img > .joi-img-wrap img { transform:scale(1.07); }
+  .joi-desk-card-body { padding:1.4rem 1.5rem 1.7rem; flex:1; display:flex; flex-direction:column; border-top:1px solid #f0ece4; }
+  .joi-desk-zoom-overlay { position:absolute; inset:0; display:flex; align-items:center; justify-content:center; opacity:0; transition:opacity .28s; pointer-events:none; background:rgba(0,0,0,.06); }
   .joi-desk-card:hover .joi-desk-zoom-overlay { opacity:1; }
 
   /* ── Mobile product grid ── */
-  .joi-prod-grid {
-    display:grid;
-    grid-template-columns:repeat(2,1fr);
-    gap:14px;
-    padding:0 16px;
-  }
-  .joi-prod-card {
-    background:#fff;
-    border-radius:16px;
-    overflow:hidden;
-    border:1px solid #e8e2d8;
-    box-shadow:0 2px 12px rgba(0,0,0,.06);
-    cursor:pointer;
-    transition:transform .3s ease, box-shadow .3s ease;
-    display:flex;
-    flex-direction:column;
-  }
+  .joi-prod-grid { display:grid; grid-template-columns:repeat(2,1fr); gap:14px; padding:0 16px; }
+  .joi-prod-card { background:#fff; border-radius:16px; overflow:hidden; border:1px solid #e8e2d8; box-shadow:0 2px 12px rgba(0,0,0,.06); cursor:pointer; transition:transform .3s ease, box-shadow .3s ease; display:flex; flex-direction:column; }
   .joi-prod-card:active { transform:scale(0.97); }
   .joi-prod-body { padding:10px 10px 14px; flex:1; display:flex; flex-direction:column; }
   .joi-prod-cat  { font-size:9px; letter-spacing:.14em; text-transform:uppercase; color:rgba(140,90,0,.6); margin-bottom:4px; font-family:'Montserrat',sans-serif; }
   .joi-prod-name { font-size:.88rem; font-weight:400; font-family:'Cormorant Garamond',serif; color:#1a1a1a; line-height:1.35; margin:0; }
+  .joi-prod-punch { font-size:9px; color:#a06800; letter-spacing:.05em; font-family:'Montserrat',sans-serif; font-style:italic; margin-top:5px; line-height:1.4; }
   .joi-prod-tap  { margin-top:8px; font-size:9px; color:#a06800; letter-spacing:.06em; font-family:'Montserrat',sans-serif; }
 
-  /* ── Slider scrollbar hide ── */
   .joi-slider::-webkit-scrollbar { display:none; }
   .joi-slider { -ms-overflow-style:none; scrollbar-width:none; }
-
-  /* ── Lightbox thumbstrip ── */
   .joi-thumbstrip::-webkit-scrollbar { display:none; }
   .joi-thumbstrip { -ms-overflow-style:none; scrollbar-width:none; }
 
-  /* ── Feature card ── */
-  .joi-feature-card {
-    display:flex; flex-direction:column; align-items:center; text-align:center;
-    padding:2.8rem 2rem;
-    border:1px solid #e8e2d8;
-    background:#faf9f6;
-    transition:transform .35s ease, box-shadow .35s ease, border-color .25s, background .25s;
-  }
-  .joi-feature-card:hover {
-    transform:translateY(-6px);
-    box-shadow:0 18px 52px rgba(0,0,0,.09);
-    border-color:rgba(140,90,0,.3);
-    background:#fff;
-  }
+  .joi-feature-card { display:flex; flex-direction:column; align-items:center; text-align:center; padding:2.8rem 2rem; border:1px solid #e8e2d8; background:#faf9f6; transition:transform .35s ease, box-shadow .35s ease, border-color .25s, background .25s; }
+  .joi-feature-card:hover { transform:translateY(-6px); box-shadow:0 18px 52px rgba(0,0,0,.09); border-color:rgba(140,90,0,.3); background:#fff; }
 
-  /* ── Testimonial card ── */
-  .joi-testi-card {
-    padding:2.4rem 2rem;
-    border:1px solid #e8e2d8;
-    background:#faf9f6;
-    cursor:pointer;
-    border-radius:4px;
-    transition:all .35s ease;
-  }
-  .joi-testi-card.active, .joi-testi-card:hover {
-    background:#fff;
-    border-color:rgba(140,90,0,.38);
-    box-shadow:0 10px 44px rgba(0,0,0,.09);
-    transform:translateY(-4px);
-  }
+  .joi-testi-card { padding:2.4rem 2rem; border:1px solid #e8e2d8; background:#faf9f6; cursor:pointer; border-radius:4px; transition:all .35s ease; }
+  .joi-testi-card.active, .joi-testi-card:hover { background:#fff; border-color:rgba(140,90,0,.38); box-shadow:0 10px 44px rgba(0,0,0,.09); transform:translateY(-4px); }
 
-  /* ── Search bar ── */
-  .joi-search-wrap {
-    position:relative; border:1.5px solid #ddd8cf;
-    background:#fff; display:flex; align-items:center;
-    border-radius:3px; transition:border-color .25s, box-shadow .25s;
-  }
-  .joi-search-wrap.focused {
-    border-color:#a06800;
-    box-shadow:0 0 0 4px rgba(160,104,0,.1);
-  }
-  .joi-search-input {
-    flex:1; padding:14px 14px; background:transparent;
-    border:none; outline:none; color:#1a1a1a;
-    font-size:14px; font-family:'Montserrat',sans-serif;
-  }
+  .joi-search-wrap { position:relative; border:1.5px solid #ddd8cf; background:#fff; display:flex; align-items:center; border-radius:3px; transition:border-color .25s, box-shadow .25s; }
+  .joi-search-wrap.focused { border-color:#a06800; box-shadow:0 0 0 4px rgba(160,104,0,.1); }
+  .joi-search-input { flex:1; padding:14px 14px; background:transparent; border:none; outline:none; color:#1a1a1a; font-size:14px; font-family:'Montserrat',sans-serif; }
 
-  /* ── Category pill ── */
-  .joi-cat-pill {
-    padding:8px 18px;
-    border:1px solid #e0dbd0;
-    background:transparent;
-    color:#888;
-    font-size:9.5px; letter-spacing:.18em; text-transform:uppercase;
-    cursor:pointer; transition:all .22s;
-    font-family:'Montserrat',sans-serif; white-space:nowrap;
-    border-radius:2px;
-  }
+  .joi-cat-pill { padding:8px 18px; border:1px solid #e0dbd0; background:transparent; color:#888; font-size:9.5px; letter-spacing:.18em; text-transform:uppercase; cursor:pointer; transition:all .22s; font-family:'Montserrat',sans-serif; white-space:nowrap; border-radius:2px; }
   .joi-cat-pill:hover { border-color:rgba(140,90,0,.4); color:#a06800; }
-  .joi-cat-pill.active {
-    background:rgba(160,104,0,.1);
-    border-color:rgba(140,90,0,.55);
-    color:#a06800;
-  }
+  .joi-cat-pill.active { background:rgba(160,104,0,.1); border-color:rgba(140,90,0,.55); color:#a06800; }
+
+  /* Read more expand */
+  .joi-readmore-btn { background:none; border:none; cursor:pointer; color:#a06800; font-size:10px; letter-spacing:.12em; font-family:'Montserrat',sans-serif; display:inline-flex; align-items:center; gap:4px; padding:0; margin-top:6px; transition:opacity .2s; }
+  .joi-readmore-btn:hover { opacity:.7; }
+  .joi-desc-expand { overflow:hidden; transition:max-height .35s ease, opacity .35s ease; }
+
   @media (max-width:640px) {
     .joi-cat-pill { border-radius:20px; }
   }
-
-  /* ── Mobile hero tweaks ── */
   @media (max-width:480px) {
     .hero-title { font-size:clamp(2rem,11vw,3rem) !important; }
     .hero-sub   { font-size:.78rem !important; }
     .hero-btns  { flex-direction:column !important; align-items:stretch !important; }
     .hero-btns a { text-align:center !important; }
-    .wt-badge   { flex-direction:column !important; gap:4px !important; }
   }
 `
 
@@ -247,7 +172,6 @@ function injectStyles() {
   stylesInjected = true
 }
 
-/* ─── Preload images ──────────────────────────────────────────── */
 function preloadImages(products, count = 4) {
   if (typeof document === 'undefined') return
   products.slice(0, count).forEach(p => {
@@ -265,19 +189,14 @@ function useVisible(threshold = 0.08) {
   const [vis, setVis] = useState(false)
   useEffect(() => {
     const el = ref.current; if (!el) return
-    const o = new IntersectionObserver(
-      ([e]) => { if (e.isIntersecting) { setVis(true); o.disconnect() } },
-      { threshold }
-    )
+    const o = new IntersectionObserver(([e]) => { if (e.isIntersecting) { setVis(true); o.disconnect() } }, { threshold })
     o.observe(el); return () => o.disconnect()
   }, [threshold])
   return { ref, vis }
 }
 
 function useIsMobile() {
-  const [mobile, setMobile] = useState(
-    () => typeof window !== 'undefined' ? window.innerWidth < 640 : false
-  )
+  const [mobile, setMobile] = useState(() => typeof window !== 'undefined' ? window.innerWidth < 640 : false)
   useEffect(() => {
     const c = () => setMobile(window.innerWidth < 640)
     window.addEventListener('resize', c); return () => window.removeEventListener('resize', c)
@@ -292,15 +211,7 @@ function ProgressiveImage({ src, srcSet, sizes, lqip, alt = '', style = {}, clas
   useEffect(() => { if (imgRef.current?.complete) setLoaded(true) }, [])
   return (
     <div className="joi-img-wrap" style={style}>
-      <img
-        ref={imgRef}
-        src={src} srcSet={srcSet} sizes={sizes} alt={alt}
-        loading={eager ? 'eager' : 'lazy'}
-        decoding="async"
-        fetchpriority={eager ? 'high' : 'auto'}
-        className={`joi-img-main${loaded ? ' loaded' : ''} ${className}`}
-        onLoad={() => setLoaded(true)}
-      />
+      <img ref={imgRef} src={src} srcSet={srcSet} sizes={sizes} alt={alt} loading={eager ? 'eager' : 'lazy'} decoding="async" fetchpriority={eager ? 'high' : 'auto'} className={`joi-img-main${loaded ? ' loaded' : ''} ${className}`} onLoad={() => setLoaded(true)} />
       {lqip && <img src={lqip} alt="" aria-hidden="true" className={`joi-img-lqip${loaded ? ' hidden' : ''}`} />}
     </div>
   )
@@ -312,11 +223,11 @@ function SkeletonDesktopCard() {
     <div style={{ border:'1px solid #e8e2d8', borderRadius:2, overflow:'hidden', background:'#fff' }}>
       <div className="joi-skeleton" style={{ height:340, width:'100%' }} />
       <div style={{ padding:'1.4rem 1.5rem 1.7rem' }}>
-        <div className="joi-skeleton" style={{ height:11, width:'38%', borderRadius:3, marginBottom:14 }} />
+        <div className="joi-skeleton" style={{ height:11, width:'38%', borderRadius:3, marginBottom:10 }} />
+        <div className="joi-skeleton" style={{ height:16, width:'60%', borderRadius:3, marginBottom:14 }} />
         <div className="joi-skeleton" style={{ height:22, width:'72%', borderRadius:3, marginBottom:14 }} />
         <div className="joi-skeleton" style={{ height:11, width:'100%', borderRadius:3, marginBottom:6 }} />
-        <div className="joi-skeleton" style={{ height:11, width:'82%', borderRadius:3, marginBottom:6 }} />
-        <div className="joi-skeleton" style={{ height:11, width:'58%', borderRadius:3 }} />
+        <div className="joi-skeleton" style={{ height:11, width:'82%', borderRadius:3 }} />
       </div>
     </div>
   )
@@ -329,6 +240,7 @@ function SkeletonMobileCard() {
       <div className="joi-prod-body">
         <div className="joi-skeleton" style={{ height:8, width:'50%', borderRadius:3, marginBottom:8 }} />
         <div className="joi-skeleton" style={{ height:14, width:'85%', borderRadius:3, marginBottom:6 }} />
+        <div className="joi-skeleton" style={{ height:9, width:'55%', borderRadius:3, marginBottom:4 }} />
         <div className="joi-skeleton" style={{ height:9, width:'35%', borderRadius:3, marginTop:8 }} />
       </div>
     </div>
@@ -353,8 +265,8 @@ function Lightbox({ product, products = [], onClose }) {
 
   useEffect(() => {
     const h = e => {
-      if (e.key === 'Escape')     onClose()
-      if (e.key === 'ArrowLeft')  goPrev()
+      if (e.key === 'Escape') onClose()
+      if (e.key === 'ArrowLeft') goPrev()
       if (e.key === 'ArrowRight') goNext()
     }
     document.addEventListener('keydown', h)
@@ -364,56 +276,42 @@ function Lightbox({ product, products = [], onClose }) {
 
   useEffect(() => { if (!zoomed) { setPanX(0); setPanY(0) } }, [zoomed, currentIdx])
 
-  const onPointerDown = e => {
-    if (!zoomed) return
-    setIsPanning(true)
-    panStart.current = { x: e.clientX - panX, y: e.clientY - panY }
-    e.currentTarget.setPointerCapture(e.pointerId)
-  }
-  const onPointerMove = e => {
-    if (!isPanning || !panStart.current) return
-    setPanX(e.clientX - panStart.current.x)
-    setPanY(e.clientY - panStart.current.y)
-  }
-  const onPointerUp = () => { setIsPanning(false); panStart.current = null }
+  const onPointerDown = e => { if (!zoomed) return; setIsPanning(true); panStart.current = { x: e.clientX - panX, y: e.clientY - panY }; e.currentTarget.setPointerCapture(e.pointerId) }
+  const onPointerMove = e => { if (!isPanning || !panStart.current) return; setPanX(e.clientX - panStart.current.x); setPanY(e.clientY - panStart.current.y) }
+  const onPointerUp   = () => { setIsPanning(false); panStart.current = null }
 
   const hasPrev = currentIdx > 0
   const hasNext = currentIdx < products.length - 1
   const zoomSrc = current.img_zoom || current.img
+  const punchline = getPunchline(current.name)
 
   return (
     <div onClick={onClose} style={{ position:'fixed', inset:0, zIndex:9999, background:'rgba(0,0,0,.95)', display:'flex', flexDirection:'column', alignItems:'center', justifyContent:'center', animation:'backdropIn .22s ease' }}>
-      {/* Top bar */}
       <div onClick={e => e.stopPropagation()} style={{ position:'absolute', top:0, left:0, right:0, zIndex:10, display:'flex', alignItems:'center', justifyContent:'space-between', padding:'16px 22px', background:'linear-gradient(to bottom,rgba(0,0,0,.7),transparent)', pointerEvents:'none' }}>
         <div style={{ pointerEvents:'auto', color:'rgba(255,255,255,.48)', fontSize:10, letterSpacing:'.28em', textTransform:'uppercase', fontFamily:"'Montserrat',sans-serif" }}>
           {current.cat || 'Product'}
           {products.length > 1 && <span style={{ marginLeft:12, color:'rgba(255,255,255,.26)' }}>{currentIdx + 1} / {products.length}</span>}
         </div>
         <div style={{ pointerEvents:'auto', display:'flex', gap:8, alignItems:'center' }}>
-          <button onClick={() => setZoomed(z => !z)} title={zoomed ? 'Fit' : 'Zoom'} style={{ background:zoomed ? 'rgba(160,104,0,.3)' : 'rgba(255,255,255,.1)', border:`1px solid ${zoomed ? 'rgba(160,104,0,.7)' : 'rgba(255,255,255,.2)'}`, borderRadius:3, width:42, height:42, display:'flex', alignItems:'center', justifyContent:'center', cursor:'pointer', color:zoomed ? '#FFD700' : '#fff', transition:'all .22s' }}>
-            <ZoomIn size={16} />
-          </button>
-          <button onClick={onClose} style={{ background:'rgba(255,255,255,.1)', border:'1px solid rgba(255,255,255,.2)', borderRadius:3, width:42, height:42, display:'flex', alignItems:'center', justifyContent:'center', cursor:'pointer', color:'#fff', transition:'all .22s' }} onMouseEnter={e => e.currentTarget.style.background='rgba(255,255,255,.2)'} onMouseLeave={e => e.currentTarget.style.background='rgba(255,255,255,.1)'}>
-            <X size={16} />
-          </button>
+          <button onClick={() => setZoomed(z => !z)} style={{ background:zoomed ? 'rgba(160,104,0,.3)' : 'rgba(255,255,255,.1)', border:`1px solid ${zoomed ? 'rgba(160,104,0,.7)' : 'rgba(255,255,255,.2)'}`, borderRadius:3, width:42, height:42, display:'flex', alignItems:'center', justifyContent:'center', cursor:'pointer', color:zoomed ? '#FFD700' : '#fff', transition:'all .22s' }}><ZoomIn size={16} /></button>
+          <button onClick={onClose} style={{ background:'rgba(255,255,255,.1)', border:'1px solid rgba(255,255,255,.2)', borderRadius:3, width:42, height:42, display:'flex', alignItems:'center', justifyContent:'center', cursor:'pointer', color:'#fff', transition:'all .22s' }} onMouseEnter={e => e.currentTarget.style.background='rgba(255,255,255,.2)'} onMouseLeave={e => e.currentTarget.style.background='rgba(255,255,255,.1)'}><X size={16} /></button>
         </div>
       </div>
 
-      {/* Main */}
       <div onClick={e => e.stopPropagation()} style={{ display:'flex', flexDirection:isMobile ? 'column' : 'row', width:'100%', height:'100vh', maxWidth:1200, paddingTop:60, paddingBottom:products.length > 1 ? (isMobile ? 0 : 72) : 0, boxSizing:'border-box', animation:'modalIn .32s cubic-bezier(.25,.46,.45,.94)' }}>
-        {/* Image */}
         <div onPointerDown={onPointerDown} onPointerMove={onPointerMove} onPointerUp={onPointerUp} onPointerCancel={onPointerUp} onClick={() => { if (!isPanning) setZoomed(z => !z) }} style={{ flex:isMobile ? '0 0 54vh' : '1 1 0', display:'flex', alignItems:'center', justifyContent:'center', position:'relative', overflow:'hidden', cursor:zoomed ? (isPanning ? 'grabbing' : 'grab') : 'zoom-in', background:'rgba(255,255,255,.02)' }}>
           <img src={zoomSrc} alt={current.name} draggable={false} loading="eager" style={{ maxWidth:zoomed ? 'none' : '100%', maxHeight:zoomed ? 'none' : '100%', objectFit:'contain', transform:zoomed ? `translate(${panX}px,${panY}px) scale(2.2)` : 'translate(0,0) scale(1)', transformOrigin:'center center', transition:isPanning ? 'none' : 'transform .4s cubic-bezier(.25,.46,.45,.94)', userSelect:'none', WebkitUserDrag:'none', display:'block' }} />
           {current.tag && <div style={{ position:'absolute', top:16, left:16, padding:'5px 14px', background:'rgba(255,255,255,.94)', border:'1px solid rgba(140,90,0,.3)', color:'#a06800', fontSize:8, letterSpacing:'.18em', textTransform:'uppercase', borderRadius:2, fontFamily:"'Montserrat',sans-serif", pointerEvents:'none' }}>{current.tag}</div>}
           {!zoomed && <div style={{ position:'absolute', bottom:14, right:14, background:'rgba(0,0,0,.52)', borderRadius:20, padding:'5px 14px', display:'flex', alignItems:'center', gap:6, color:'rgba(255,255,255,.8)', fontSize:10, letterSpacing:'.08em', fontFamily:"'Montserrat',sans-serif", pointerEvents:'none' }}><ZoomIn size={12} /> Click to zoom</div>}
-          {zoomed && <div style={{ position:'absolute', bottom:14, right:14, background:'rgba(160,104,0,.75)', borderRadius:20, padding:'5px 14px', color:'#fff', fontSize:10, letterSpacing:'.08em', fontFamily:"'Montserrat',sans-serif", pointerEvents:'none' }}>Drag to pan · click to fit</div>}
         </div>
 
-        {/* Info */}
-        <div style={{ width:isMobile ? '100%' : 330, flexShrink:0, display:'flex', flexDirection:'column', justifyContent:'space-between', padding:isMobile ? '22px 22px 30px' : '2.8rem 2.4rem', background:'#111', overflowY:'auto', boxSizing:'border-box' }}>
+        <div style={{ width:isMobile ? '100%' : 340, flexShrink:0, display:'flex', flexDirection:'column', justifyContent:'space-between', padding:isMobile ? '22px 22px 30px' : '2.8rem 2.4rem', background:'#111', overflowY:'auto', boxSizing:'border-box' }}>
           <div>
             {current.cat && <div style={{ fontSize:8, letterSpacing:'.28em', textTransform:'uppercase', color:'rgba(160,104,0,.7)', marginBottom:14, fontFamily:"'Montserrat',sans-serif" }}>{current.cat}</div>}
-            <h2 style={{ fontSize:'clamp(1.4rem,4vw,2rem)', fontWeight:400, fontFamily:"'Cormorant Garamond',serif", color:'#fff', lineHeight:1.2, marginBottom:16 }}>{current.name}</h2>
+            <h2 style={{ fontSize:'clamp(1.4rem,4vw,2rem)', fontWeight:400, fontFamily:"'Cormorant Garamond',serif", color:'#fff', lineHeight:1.2, marginBottom:10 }}>{current.name}</h2>
+            {punchline && (
+              <p style={{ fontSize:13, fontStyle:'italic', color:'#FFD700', letterSpacing:'.04em', fontFamily:"'Cormorant Garamond',serif", marginBottom:16, lineHeight:1.5 }}>{punchline}</p>
+            )}
             <div style={{ width:36, height:1, background:'#a06800', marginBottom:18 }} />
             {current.desc && <p style={{ color:'rgba(255,255,255,.48)', fontSize:13.5, lineHeight:2, margin:0 }}>{current.desc}</p>}
           </div>
@@ -426,17 +324,15 @@ function Lightbox({ product, products = [], onClose }) {
         </div>
       </div>
 
-      {/* Arrows */}
       {products.length > 1 && (
         <>
-          <button onClick={e => { e.stopPropagation(); goPrev() }} disabled={!hasPrev} style={{ position:'absolute', left:16, top:'50%', transform:'translateY(-50%)', width:48, height:48, borderRadius:'50%', background:hasPrev ? 'rgba(255,255,255,.12)' : 'rgba(255,255,255,.04)', border:`1px solid ${hasPrev ? 'rgba(255,255,255,.22)' : 'rgba(255,255,255,.08)'}`, display:'flex', alignItems:'center', justifyContent:'center', cursor:hasPrev ? 'pointer' : 'default', color:hasPrev ? '#fff' : 'rgba(255,255,255,.2)', transition:'all .22s', zIndex:10 }} onMouseEnter={e => { if (hasPrev) e.currentTarget.style.background='rgba(255,255,255,.22)' }} onMouseLeave={e => e.currentTarget.style.background=hasPrev ? 'rgba(255,255,255,.12)' : 'rgba(255,255,255,.04)'}><ChevronLeft size={20} /></button>
-          <button onClick={e => { e.stopPropagation(); goNext() }} disabled={!hasNext} style={{ position:'absolute', right:isMobile ? 16 : 346, top:'50%', transform:'translateY(-50%)', width:48, height:48, borderRadius:'50%', background:hasNext ? 'rgba(255,255,255,.12)' : 'rgba(255,255,255,.04)', border:`1px solid ${hasNext ? 'rgba(255,255,255,.22)' : 'rgba(255,255,255,.08)'}`, display:'flex', alignItems:'center', justifyContent:'center', cursor:hasNext ? 'pointer' : 'default', color:hasNext ? '#fff' : 'rgba(255,255,255,.2)', transition:'all .22s', zIndex:10 }} onMouseEnter={e => { if (hasNext) e.currentTarget.style.background='rgba(255,255,255,.22)' }} onMouseLeave={e => e.currentTarget.style.background=hasNext ? 'rgba(255,255,255,.12)' : 'rgba(255,255,255,.04)'}><ChevronRight size={20} /></button>
+          <button onClick={e => { e.stopPropagation(); goPrev() }} disabled={!hasPrev} style={{ position:'absolute', left:16, top:'50%', transform:'translateY(-50%)', width:48, height:48, borderRadius:'50%', background:hasPrev ? 'rgba(255,255,255,.12)' : 'rgba(255,255,255,.04)', border:`1px solid ${hasPrev ? 'rgba(255,255,255,.22)' : 'rgba(255,255,255,.08)'}`, display:'flex', alignItems:'center', justifyContent:'center', cursor:hasPrev ? 'pointer' : 'default', color:hasPrev ? '#fff' : 'rgba(255,255,255,.2)', transition:'all .22s', zIndex:10 }}><ChevronLeft size={20} /></button>
+          <button onClick={e => { e.stopPropagation(); goNext() }} disabled={!hasNext} style={{ position:'absolute', right:isMobile ? 16 : 356, top:'50%', transform:'translateY(-50%)', width:48, height:48, borderRadius:'50%', background:hasNext ? 'rgba(255,255,255,.12)' : 'rgba(255,255,255,.04)', border:`1px solid ${hasNext ? 'rgba(255,255,255,.22)' : 'rgba(255,255,255,.08)'}`, display:'flex', alignItems:'center', justifyContent:'center', cursor:hasNext ? 'pointer' : 'default', color:hasNext ? '#fff' : 'rgba(255,255,255,.2)', transition:'all .22s', zIndex:10 }}><ChevronRight size={20} /></button>
         </>
       )}
 
-      {/* Thumb strip */}
       {products.length > 1 && (
-        <div onClick={e => e.stopPropagation()} className="joi-thumbstrip" style={{ position:'absolute', bottom:0, left:0, right:isMobile ? 0 : 330, height:72, display:'flex', alignItems:'center', gap:7, padding:'0 20px', overflowX:'auto', background:'linear-gradient(to top,rgba(0,0,0,.75),rgba(0,0,0,.28))' }}>
+        <div onClick={e => e.stopPropagation()} className="joi-thumbstrip" style={{ position:'absolute', bottom:0, left:0, right:isMobile ? 0 : 340, height:72, display:'flex', alignItems:'center', gap:7, padding:'0 20px', overflowX:'auto', background:'linear-gradient(to top,rgba(0,0,0,.75),rgba(0,0,0,.28))' }}>
           {products.map((p, i) => (
             <div key={p.id ?? p.name} onClick={() => { setZoomed(false); setPanX(0); setPanY(0); setCurrentIdx(i) }} style={{ width:48, height:54, flexShrink:0, borderRadius:3, overflow:'hidden', border:`2px solid ${i === currentIdx ? '#a06800' : 'rgba(255,255,255,.14)'}`, cursor:'pointer', opacity:i === currentIdx ? 1 : 0.48, transform:i === currentIdx ? 'scale(1.1)' : 'scale(1)', transition:'all .22s' }}>
               <img src={p.img_sm || p.img} alt={p.name} style={{ width:'100%', height:'100%', objectFit:'cover', objectPosition:'center top', display:'block' }} />
@@ -452,16 +348,13 @@ function Lightbox({ product, products = [], onClose }) {
 function FloatingOrbs() {
   return (
     <div style={{ position:'absolute', inset:0, pointerEvents:'none', overflow:'hidden' }}>
-      {[{ size:320, top:'6%',  left:'-7%',  dur:14 },
-        { size:200, top:'55%', right:'-5%', dur:18 },
-        { size:130, top:'25%', right:'13%', dur:12 }].map((o, i) => (
+      {[{ size:320, top:'6%', left:'-7%', dur:14 }, { size:200, top:'55%', right:'-5%', dur:18 }, { size:130, top:'25%', right:'13%', dur:12 }].map((o, i) => (
         <div key={i} style={{ position:'absolute', width:o.size, height:o.size, borderRadius:'50%', background:'radial-gradient(circle,rgba(160,104,0,.055) 0%,transparent 72%)', top:o.top, left:o.left, right:o.right, animation:`orbFloat ${o.dur}s ease-in-out ${i*-3}s infinite` }} />
       ))}
     </div>
   )
 }
 
-/* ─── Floating bubble ────────────────────────────────────────── */
 function FloatingBubble({ img, size, top, left, right, bottom, delay, duration }) {
   if (!img) return null
   return (
@@ -471,50 +364,52 @@ function FloatingBubble({ img, size, top, left, right, bottom, delay, duration }
   )
 }
 
-/* ─── Section label ──────────────────────────────────────────── */
 function SectionLabel({ children }) {
-  return (
-    <div style={{ fontSize:9, letterSpacing:'.48em', textTransform:'uppercase', color:'#a06800', marginBottom:10, fontFamily:"'Montserrat',sans-serif" }}>
-      {children}
-    </div>
-  )
+  return <div style={{ fontSize:9, letterSpacing:'.48em', textTransform:'uppercase', color:'#a06800', marginBottom:10, fontFamily:"'Montserrat',sans-serif" }}>{children}</div>
 }
 
-/* ─── Desktop product card ───────────────────────────────────── */
+/* ─── Desktop product card (with punchline + read more) ──────── */
 function DesktopCard({ p, i, onZoom }) {
+  const [expanded, setExpanded] = useState(false)
   const isAboveFold = i < 4
+  const punchline = getPunchline(p.name)
+
   return (
-    <div className="joi-desk-card" onClick={() => onZoom(p)}>
-      <div className="joi-desk-card-img">
-        <ProgressiveImage
-          src={p.img}
-          srcSet={p.img_sm ? `${p.img_sm} 300w, ${p.img} 600w` : undefined}
-          sizes="(max-width:640px) 50vw, 320px"
-          lqip={p.img_lqip}
-          alt={p.name}
-          eager={isAboveFold}
-          style={{ width:'100%', height:'100%' }}
-        />
-        {/* Dark gradient bottom overlay */}
+    <div className="joi-desk-card">
+      {/* Image — clicking zooms */}
+      <div className="joi-desk-card-img" onClick={() => onZoom(p)} style={{ cursor:'pointer' }}>
+        <ProgressiveImage src={p.img} srcSet={p.img_sm ? `${p.img_sm} 300w, ${p.img} 600w` : undefined} sizes="(max-width:640px) 50vw, 320px" lqip={p.img_lqip} alt={p.name} eager={isAboveFold} style={{ width:'100%', height:'100%' }} />
         <div style={{ position:'absolute', inset:0, background:'linear-gradient(to top,rgba(0,0,0,.32) 0%,transparent 50%)', pointerEvents:'none' }} />
-        {p.tag && (
-          <div style={{ position:'absolute', top:14, left:14, padding:'5px 13px', background:'rgba(255,255,255,.94)', border:'1px solid rgba(140,90,0,.28)', color:'#a06800', fontSize:8, letterSpacing:'.18em', textTransform:'uppercase', borderRadius:2, fontFamily:"'Montserrat',sans-serif" }}>{p.tag}</div>
-        )}
-        {p.cat && (
-          <div style={{ position:'absolute', bottom:12, left:14, color:'rgba(255,255,255,.92)', fontSize:9, letterSpacing:'.26em', textTransform:'uppercase', fontFamily:"'Montserrat',sans-serif", textShadow:'0 1px 4px rgba(0,0,0,.4)' }}>{p.cat}</div>
-        )}
+        {p.tag && <div style={{ position:'absolute', top:14, left:14, padding:'5px 13px', background:'rgba(255,255,255,.94)', border:'1px solid rgba(140,90,0,.28)', color:'#a06800', fontSize:8, letterSpacing:'.18em', textTransform:'uppercase', borderRadius:2, fontFamily:"'Montserrat',sans-serif" }}>{p.tag}</div>}
+        {p.cat && <div style={{ position:'absolute', bottom:12, left:14, color:'rgba(255,255,255,.92)', fontSize:9, letterSpacing:'.26em', textTransform:'uppercase', fontFamily:"'Montserrat',sans-serif", textShadow:'0 1px 4px rgba(0,0,0,.4)' }}>{p.cat}</div>}
         <div className="joi-desk-zoom-overlay">
           <div style={{ background:'rgba(0,0,0,.45)', borderRadius:'50%', width:52, height:52, display:'flex', alignItems:'center', justifyContent:'center', border:'1px solid rgba(255,255,255,.4)' }}>
             <ZoomIn size={20} color="#fff" />
           </div>
         </div>
       </div>
+
       <div className="joi-desk-card-body">
-        <h3 style={{ fontSize:'1.12rem', fontWeight:400, fontFamily:"'Cormorant Garamond',serif", color:'#1a1a1a', lineHeight:1.3, marginBottom:8, letterSpacing:'.01em' }}>{p.name}</h3>
-        {p.desc && (
-          <p style={{ color:'#8a8580', fontSize:12, lineHeight:1.82, flex:1, display:'-webkit-box', WebkitLineClamp:3, WebkitBoxOrient:'vertical', overflow:'hidden', margin:0 }}>{p.desc}</p>
+        {/* Punchline — always visible, prominent */}
+        {punchline && (
+          <p style={{ fontSize:'1rem', fontStyle:'italic', fontFamily:"'Cormorant Garamond',serif", color:'#a06800', marginBottom:8, lineHeight:1.4, fontWeight:400 }}>{punchline}</p>
         )}
-        <div style={{ display:'flex', alignItems:'center', gap:6, marginTop:14, color:'rgba(140,90,0,.62)', fontSize:9.5, letterSpacing:'.1em', fontFamily:"'Montserrat',sans-serif" }}>
+        <h3 style={{ fontSize:'1.12rem', fontWeight:400, fontFamily:"'Cormorant Garamond',serif", color:'#1a1a1a', lineHeight:1.3, marginBottom:8, letterSpacing:'.01em' }}>{p.name}</h3>
+
+        {/* Description — truncated unless expanded */}
+        {p.desc && (
+          <>
+            <div className="joi-desc-expand" style={{ maxHeight: expanded ? '300px' : '0px', opacity: expanded ? 1 : 0, overflow:'hidden', transition:'max-height .35s ease, opacity .35s ease' }}>
+              <p style={{ color:'#8a8580', fontSize:12, lineHeight:1.82, margin:'0 0 8px' }}>{p.desc}</p>
+            </div>
+            <button className="joi-readmore-btn" onClick={e => { e.stopPropagation(); setExpanded(ex => !ex) }}>
+              {expanded ? 'Show less' : 'Read more'}
+              <ChevronDown size={11} style={{ transform: expanded ? 'rotate(180deg)' : 'rotate(0)', transition:'transform .25s' }} />
+            </button>
+          </>
+        )}
+
+        <div onClick={() => onZoom(p)} style={{ display:'flex', alignItems:'center', gap:6, marginTop:14, color:'rgba(140,90,0,.62)', fontSize:9.5, letterSpacing:'.1em', fontFamily:"'Montserrat',sans-serif", cursor:'pointer' }}>
           <span>View details</span>
           <ArrowRight size={11} />
         </div>
@@ -525,6 +420,7 @@ function DesktopCard({ p, i, onZoom }) {
 
 /* ─── Mobile product card ─────────────────────────────────────── */
 function MobileCard({ p, onZoom, eager = false }) {
+  const punchline = getPunchline(p.name)
   return (
     <div className="joi-prod-card" onClick={() => onZoom(p)}>
       <div style={{ position:'relative', aspectRatio:'3/4', overflow:'hidden', background:'#f7f6f2' }}>
@@ -536,6 +432,7 @@ function MobileCard({ p, onZoom, eager = false }) {
       <div className="joi-prod-body">
         {p.cat && <div className="joi-prod-cat">{p.cat}</div>}
         <h3 className="joi-prod-name">{p.name}</h3>
+        {punchline && <p className="joi-prod-punch">{punchline}</p>}
         <div className="joi-prod-tap">Tap to view →</div>
       </div>
     </div>
@@ -563,9 +460,9 @@ function SearchFilterBar({ query, setQuery, activeFilter, setActiveFilter, allCa
 
 /* ─── Product Slider ─────────────────────────────────────────── */
 function ProductSlider({ products, loading, onZoom }) {
-  const [idx, setIdx] = useState(0)
-  const trackRef      = useRef(null)
-  const { ref, vis }  = useVisible(0.05)
+  const [idx, setIdx]    = useState(0)
+  const trackRef         = useRef(null)
+  const { ref, vis }     = useVisible(0.05)
   const CARD_W = 320, GAP = 20
 
   const prev = () => setIdx(i => Math.max(0, i - 1))
@@ -573,13 +470,13 @@ function ProductSlider({ products, loading, onZoom }) {
 
   useEffect(() => {
     if (!trackRef.current) return
-    trackRef.current.scrollTo({ left: idx * (CARD_W + GAP), behavior: 'smooth' })
+    trackRef.current.scrollTo({ left: idx * (CARD_W + GAP), behavior:'smooth' })
   }, [idx])
 
   return (
     <section ref={ref} style={{ padding:'5.5rem 0 6.5rem', position:'relative', background:'#f7f6f2', borderTop:'1px solid #ede9e0', borderBottom:'1px solid #ede9e0' }}>
-      {!loading && products[0] && <FloatingBubble img={products[0].img_sm || products[0].img} size={90} top="-28px" right="5%" delay={0} duration={5.5} />}
-      {!loading && products[3] && <FloatingBubble img={products[3].img_sm || products[3].img} size={72} bottom="32px" left="2%" delay={1.5} duration={6.5} />}
+      {!loading && products[0] && <FloatingBubble img={products[0].img_sm || products[0].img} size={90}  top="-28px" right="5%" delay={0}   duration={5.5} />}
+      {!loading && products[3] && <FloatingBubble img={products[3].img_sm || products[3].img} size={72}  bottom="32px" left="2%" delay={1.5} duration={6.5} />}
 
       <div style={{ maxWidth:1360, margin:'0 auto', padding:'0 2rem', position:'relative', zIndex:2 }}>
         <div style={{ display:'flex', justifyContent:'space-between', alignItems:'flex-end', marginBottom:36, flexWrap:'wrap', gap:14, opacity:vis ? 1 : 0, transform:vis ? 'none' : 'translateY(18px)', transition:'all .7s' }}>
@@ -591,9 +488,7 @@ function ProductSlider({ products, loading, onZoom }) {
             <div style={{ display:'flex', gap:10, alignItems:'center' }}>
               <span style={{ fontSize:11, color:'#bbb', fontFamily:"'Montserrat',sans-serif", letterSpacing:'.06em', marginRight:4 }}>{idx + 1} / {products.length}</span>
               {[{ fn:prev, dis:idx === 0, Icon:ChevronLeft }, { fn:next, dis:idx >= products.length - 1, Icon:ChevronRight }].map(({ fn, dis, Icon }, ki) => (
-                <button key={ki} onClick={fn} disabled={dis} style={{ width:46, height:46, border:`1px solid ${dis ? '#e0dbd0' : 'rgba(140,90,0,.45)'}`, background:'transparent', cursor:dis ? 'default' : 'pointer', display:'flex', alignItems:'center', justifyContent:'center', color:dis ? '#ccc' : '#a06800', transition:'all .28s', borderRadius:2 }} onMouseEnter={e => { if (!dis) e.currentTarget.style.background='rgba(160,104,0,.07)' }} onMouseLeave={e => e.currentTarget.style.background='transparent'}>
-                  <Icon size={18} />
-                </button>
+                <button key={ki} onClick={fn} disabled={dis} style={{ width:46, height:46, border:`1px solid ${dis ? '#e0dbd0' : 'rgba(140,90,0,.45)'}`, background:'transparent', cursor:dis ? 'default' : 'pointer', display:'flex', alignItems:'center', justifyContent:'center', color:dis ? '#ccc' : '#a06800', transition:'all .28s', borderRadius:2 }} onMouseEnter={e => { if (!dis) e.currentTarget.style.background='rgba(160,104,0,.07)' }} onMouseLeave={e => e.currentTarget.style.background='transparent'}><Icon size={18} /></button>
               ))}
             </div>
           )}
@@ -631,7 +526,6 @@ function ProductShowcase({ products, loading, onZoom }) {
   const isMobile                   = useIsMobile()
 
   const ALL_CATS = ['All', ...Array.from(new Set(products.map(p => p.cat).filter(Boolean)))]
-
   const filtered = products.filter(p => {
     const matchCat = activeFilter === 'All' || p.cat === activeFilter
     const q = query.toLowerCase()
@@ -639,7 +533,6 @@ function ProductShowcase({ products, loading, onZoom }) {
   })
 
   useEffect(() => { setVisible(12) }, [activeFilter, query])
-
   const visible = filtered.slice(0, visibleCount)
   const hasMore = visibleCount < filtered.length
 
@@ -647,12 +540,11 @@ function ProductShowcase({ products, loading, onZoom }) {
     <section id="collections" ref={ref} style={{ padding:isMobile ? '3rem 0 4rem' : '5.5rem 2rem 6.5rem', position:'relative', overflow:'hidden', background:'#fff' }}>
       {!isMobile && !loading && (
         <>
-          <FloatingBubble img={products[2]?.img_sm} size={130} top="7%"  right="-24px" delay={0} duration={7} />
+          <FloatingBubble img={products[2]?.img_sm} size={130} top="7%" right="-24px" delay={0} duration={7} />
           <FloatingBubble img={products[4]?.img_sm} size={90} bottom="4%" left="-16px" delay={2} duration={8} />
         </>
       )}
       <div style={{ maxWidth:1360, margin:'0 auto', position:'relative', zIndex:2 }}>
-
         <div style={{ textAlign:'center', marginBottom:isMobile ? 28 : 54, padding:isMobile ? '0 1rem' : 0, opacity:vis ? 1 : 0, transform:vis ? 'none' : 'translateY(22px)', transition:'all .75s' }}>
           <SectionLabel>Browse Our Range</SectionLabel>
           <h2 style={{ fontSize:'clamp(2rem,5vw,3.5rem)', fontWeight:300, fontFamily:"'Cormorant Garamond',serif", color:'#1a1a1a', marginBottom:8, letterSpacing:'-.01em' }}>Our Products</h2>
@@ -698,7 +590,6 @@ function OurStory() {
     <section id="story" ref={ref} style={{ padding:'7rem 2rem', background:'#faf9f6', borderBottom:'1px solid #e8e2d8', position:'relative', overflow:'hidden' }}>
       <FloatingOrbs />
       <div style={{ maxWidth:1160, margin:'0 auto', display:'grid', gridTemplateColumns:'repeat(auto-fit,minmax(min(100%,300px),1fr))', gap:'5rem', alignItems:'center', position:'relative', zIndex:1 }}>
-
         <div style={{ position:'relative', opacity:vis ? 1 : 0, transform:vis ? 'translateX(0)' : 'translateX(-32px)', transition:'all .9s ease' }}>
           <div style={{ position:'absolute', top:-18, left:-18, right:18, bottom:18, border:'1px solid rgba(140,90,0,.18)', zIndex:0, pointerEvents:'none' }} />
           <img src={STORY_IMG} alt="Joi Story" style={{ width:'100%', height:460, objectFit:'cover', position:'relative', zIndex:1, filter:'brightness(.9) saturate(1.06)', display:'block' }} />
@@ -770,7 +661,7 @@ function Testimonials() {
         </div>
         <div style={{ display:'grid', gridTemplateColumns:'repeat(auto-fit,minmax(min(100%,280px),1fr))', gap:20 }}>
           {reviews.map((r, i) => (
-            <div key={r.name} onClick={() => setActive(i)} className={`joi-testi-card${i === active ? ' active' : ''}`} style={{ opacity:vis ? 1 : 0, transform:vis ? 'translateY(0)' : 'translateY(28px)', transition:`opacity .7s ease ${i * .13}s, transform .7s ease ${i * .13}s, background .35s, border-color .35s, box-shadow .35s, transform .35s` }}>
+            <div key={r.name} onClick={() => setActive(i)} className={`joi-testi-card${i === active ? ' active' : ''}`} style={{ opacity:vis ? 1 : 0, transform:vis ? 'translateY(0)' : 'translateY(28px)', transition:`opacity .7s ease ${i * .13}s, transform .7s ease ${i * .13}s, background .35s, border-color .35s, box-shadow .35s` }}>
               <div style={{ display:'flex', gap:3, marginBottom:16 }}>
                 {Array(r.stars).fill(0).map((_, si) => <Star key={si} size={13} fill="#a06800" color="#a06800" />)}
               </div>
@@ -821,7 +712,7 @@ function CtaBanner() {
 
 /* ─── Hero ───────────────────────────────────────────────────── */
 function Hero({ products, loading }) {
-  const [mouse, setMouse] = useState({ x: .5, y: .5 })
+  const [mouse, setMouse] = useState({ x:.5, y:.5 })
   useEffect(() => {
     const h = e => setMouse({ x: e.clientX / window.innerWidth, y: e.clientY / window.innerHeight })
     window.addEventListener('mousemove', h); return () => window.removeEventListener('mousemove', h)
@@ -830,28 +721,23 @@ function Hero({ products, loading }) {
 
   return (
     <section style={{ position:'relative', minHeight:'100vh', display:'flex', alignItems:'center', justifyContent:'center', overflow:'hidden' }}>
-      <div style={{ position:'absolute', inset:'-10%', backgroundImage:`url(${HERO_BG})`, backgroundSize:'cover', backgroundPosition:'center 30%', transform:`translate(${px*.28}px,${py*.28}px)`, transition:'transform .12s linear', filter:'brightness(.44)' }} />
-      <div style={{ position:'absolute', inset:0, background:'linear-gradient(180deg,rgba(0,0,0,.15) 0%,rgba(0,0,0,.4) 52%,rgba(0,0,0,.65) 100%)' }} />
-      <div style={{ position:'absolute', inset:0, backgroundImage:'linear-gradient(rgba(255,255,255,.016) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.016) 1px,transparent 1px)', backgroundSize:'72px 72px' }} />
+      {/* African braids background */}
+      <div style={{ position:'absolute', inset:'-10%', backgroundImage:`url(${AFRICAN_BRAIDS_BG})`, backgroundSize:'cover', backgroundPosition:'center 40%', transform:`translate(${px*.28}px,${py*.28}px)`, transition:'transform .12s linear', filter:'brightness(.38)' }} />
+      <div style={{ position:'absolute', inset:0, background:'linear-gradient(180deg,rgba(0,0,0,.1) 0%,rgba(0,0,0,.35) 50%,rgba(0,0,0,.62) 100%)' }} />
+      {/* Warm amber overlay to complement the brand */}
+      <div style={{ position:'absolute', inset:0, background:'radial-gradient(ellipse at 50% 70%, rgba(160,104,0,.12) 0%, transparent 65%)' }} />
+      <div style={{ position:'absolute', inset:0, backgroundImage:'linear-gradient(rgba(255,255,255,.014) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.014) 1px,transparent 1px)', backgroundSize:'72px 72px' }} />
       <FloatingOrbs />
 
       {!loading && products[0] && <FloatingBubble img={products[0].img_sm || products[0].img} size={158} top="9%"   right="5%"   delay={0}   duration={6.2} />}
       {!loading && products[1] && <FloatingBubble img={products[1].img_sm || products[1].img} size={118} bottom="18%" right="7%"   delay={1.5} duration={7.1} />}
       {!loading && products[2] && <FloatingBubble img={products[2].img_sm || products[2].img} size={98}  top="20%"   left="3.5%"  delay={.9}  duration={5.8} />}
-      {!loading && products[3] && <FloatingBubble img={products[3].img_sm || products[3].img} size={78}  bottom="26%" left="5%"   delay={2.5} duration={6.8} />}
+      {!loading && products[3] && <FloatingBubble img={products[3].img_sm || products[3].img} size={78}  bottom="26%" left="5%"    delay={2.5} duration={6.8} />}
 
       <div style={{ position:'relative', zIndex:2, textAlign:'center', padding:'8.5rem 1.5rem 3.5rem', maxWidth:900, width:'100%' }}>
 
-        {/* Company badge */}
-        <div className="wt-badge" style={{ display:'inline-flex', alignItems:'center', gap:10, background:'rgba(255,255,255,.09)', border:'1px solid rgba(255,215,0,.32)', backdropFilter:'blur(10px)', padding:'11px 22px', borderRadius:2, marginBottom:30, marginTop:'-10rem', opacity:0, animation:'fadeIn 1s ease .05s forwards' }}>
-          <Building2 size={14} color="#FFD700" />
-          <span style={{ fontSize:10, letterSpacing:'.22em', textTransform:'uppercase', color:'rgba(255,255,255,.9)', fontFamily:"'Montserrat',sans-serif", fontWeight:600 }}>Wellstrend Creations Ltd</span>
-          <span style={{ width:1, height:14, background:'rgba(255,215,0,.32)' }} />
-          <span style={{ fontSize:9, letterSpacing:'.16em', textTransform:'uppercase', color:'rgba(255,215,0,.85)', fontFamily:"'Montserrat',sans-serif" }}>Est. Kenya</span>
-        </div>
-
-        {/* Logo */}
-        <div style={{ display:'flex', justifyContent:'center', marginBottom:24, opacity:0, animation:'fadeIn 1s ease .2s forwards' }}>
+        {/* Logo — centred, no company badge above it */}
+        <div style={{ display:'flex', justifyContent:'center', marginBottom:28, opacity:0, animation:'fadeIn 1s ease .2s forwards' }}>
           <div style={{ position:'relative', width:150, height:150, display:'flex', alignItems:'center', justifyContent:'center' }}>
             <div style={{ position:'absolute', inset:-12, borderRadius:'50%', background:'radial-gradient(circle,rgba(255,215,0,.12) 0%,transparent 75%)', pointerEvents:'none' }} />
             <div style={{ position:'absolute', inset:0, borderRadius:'50%', background:'rgba(255,255,255,.08)', border:'1px solid rgba(255,255,255,.16)', backdropFilter:'blur(8px)', boxShadow:'0 8px 40px rgba(255,215,0,.1)' }} />

@@ -140,15 +140,16 @@ export default function About() {
 
       {/* ══ HERO ══════════════════════════════════════════════ */}
       <section style={{ position:'relative', height:'86vh', minHeight:540, display:'flex', alignItems:'center', justifyContent:'center', overflow:'hidden' }}>
-        <div style={{ position:'absolute', inset:'-10%', backgroundImage:'url(https://images.pexels.com/photos/3373745/pexels-photo-3373745.jpeg?auto=compress&cs=tinysrgb&w=1600)', backgroundSize:'cover', backgroundPosition:'center 30%', transform:`translate(${px*.3}px,${py*.3}px)`, transition:'transform .09s linear', filter:'brightness(.2)' }} />
+        {/* African braids / beauty background */}
+        <div style={{ position:'absolute', inset:'-10%', backgroundImage:'url(https://images.pexels.com/photos/3993449/pexels-photo-3993449.jpeg?auto=compress&cs=tinysrgb&w=1600)', backgroundSize:'cover', backgroundPosition:'center 35%', transform:`translate(${px*.3}px,${py*.3}px)`, transition:'transform .09s linear', filter:'brightness(.2)' }} />
         <div style={{ position:'absolute', inset:0, background:`radial-gradient(ellipse at ${50+px*.35}% ${50+py*.35}%,rgba(255,215,0,.12) 0%,transparent 60%)` }} />
         <div style={{ position:'absolute', inset:0, backgroundImage:'linear-gradient(rgba(255,215,0,.022) 1px,transparent 1px),linear-gradient(90deg,rgba(255,215,0,.022) 1px,transparent 1px)', backgroundSize:'64px 64px' }} />
         <div style={{ position:'absolute', inset:0, background:'linear-gradient(to bottom,transparent 55%,#fff 100%)' }} />
         <DarkOrbs />
 
         <div style={{ position:'relative', zIndex:2, textAlign:'center', padding:'0 1.2rem', maxWidth:760 }}>
-          {/* Logo */}
-          <div style={{ display:'flex', justifyContent:'center', marginBottom:22, opacity:0, animation:'fadeIn 1s ease .1s forwards' }}>
+          {/* Logo only — no company badge */}
+          <div style={{ display:'flex', justifyContent:'center', marginBottom:28, opacity:0, animation:'fadeIn 1s ease .1s forwards' }}>
             <div style={{ position:'relative', width:130, height:130, display:'flex', alignItems:'center', justifyContent:'center' }}>
               <div style={{ position:'absolute', inset:-10, borderRadius:'50%', background:'radial-gradient(circle,rgba(255,215,0,.15) 0%,transparent 70%)', pointerEvents:'none' }} />
               <div style={{ position:'absolute', inset:0, borderRadius:'50%', background:'rgba(255,255,255,.1)', border:'1px solid rgba(255,255,255,.22)', backdropFilter:'blur(6px)', boxShadow:'0 6px 36px rgba(255,215,0,.12)' }} />
@@ -157,7 +158,7 @@ export default function About() {
           </div>
 
           <div style={{ fontSize:9, letterSpacing:'.5em', textTransform:'uppercase', color:GOLD_L, marginBottom:16, opacity:0, animation:'fadeIn 1s ease .38s forwards', fontFamily:"'Montserrat',sans-serif" }}>
-            Wellstrend Creations Ltd · Made in Kenya
+            Made in Kenya · Beauty for Everyday Africa
           </div>
 
           <h1 style={{ fontSize:'clamp(2.6rem,8vw,5.8rem)', fontWeight:300, fontFamily:"'Cormorant Garamond',serif", lineHeight:1.06, marginBottom:16, opacity:0, animation:'fadeUp 1s ease .5s forwards' }}>
